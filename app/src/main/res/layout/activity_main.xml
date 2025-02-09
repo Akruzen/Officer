@@ -174,11 +174,12 @@
                         android:text="Officer"/>
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/versionTextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:clickable="false"
-                        android:text="@string/app_version"/>
+                        android:text="1.0.0"/>
 
                 </LinearLayout>
                 

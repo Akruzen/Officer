@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -13,6 +15,7 @@ import android.view.View;
 
 import com.akruzen.officer.Functions.Methods;
 import com.akruzen.officer.lib.TinyDB;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.materialswitch.MaterialSwitch;
 
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     MaterialSwitch onOffSwitch;
     MaterialCardView permissionsCardView;
     TinyDB tinyDB;
+    MaterialButton versionTextButton;
 
     public void onAccessibilityButtonPress(View view) {
         Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -60,9 +64,11 @@ public class MainActivity extends AppCompatActivity {
         // Find view by ID
         onOffSwitch = findViewById(R.id.officerSwitch);
         permissionsCardView = findViewById(R.id.permissionsCardView);
+        versionTextButton = findViewById(R.id.versionTextButton);
         // Method Calls
         setVisibilityAndEnablement();
         setOnOffSwitch();
+        setVersionTextButton();
     }
 
     private void setVisibilityAndEnablement() {
@@ -80,5 +86,17 @@ public class MainActivity extends AppCompatActivity {
     private void setOnOffSwitch() {
         onOffSwitch.setOnCheckedChangeListener(
                 (buttonView, isChecked) -> tinyDB.putBoolean(IS_MASTER_ENABLED, isChecked));
+    }
+
+    private void setVersionTextButton() {
+        try {
+            PackageInfo packageInfo;
+            packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String versionName = "Version: " + packageInfo.versionName.split("-")[1].trim();
+            versionTextButton.setText(versionName);
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
