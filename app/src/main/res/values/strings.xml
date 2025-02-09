@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Officer</string>
+    <string name="app_version">v1.0.0</string>
     <string name="accessibility_label">Officer Accessibility</string>
     <string name="accessibility_description">To detect if a power menu is opened, Officer needs accessibility settings. You can be rest assured that this setting has no other malicious intent.</string>
     <string name="admin_label">Officer Admin Access</string>

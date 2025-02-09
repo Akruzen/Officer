@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WavyLineView">
+        <attr name="waveStrokeWidth" format="dimension" />
+        <attr name="waveColor" format="color" />
+        <attr name="waveSeparation" format="integer" />
+        <attr name="waveTopColor" format="color" />
+        <attr name="waveBottomColor" format="color" />
+    </declare-styleable>
+</resources>
