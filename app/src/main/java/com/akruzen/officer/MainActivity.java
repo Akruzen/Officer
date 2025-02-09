@@ -12,11 +12,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.akruzen.officer.Functions.Methods;
 import com.akruzen.officer.lib.TinyDB;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.materialswitch.MaterialSwitch;
 
 import com.akruzen.officer.Constants.Strings;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     MaterialCardView permissionsCardView;
     TinyDB tinyDB;
     MaterialButton versionTextButton;
+    ShapeableImageView clipartImageView;
 
     public void onAccessibilityButtonPress(View view) {
         Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         onOffSwitch = findViewById(R.id.officerSwitch);
         permissionsCardView = findViewById(R.id.permissionsCardView);
         versionTextButton = findViewById(R.id.versionTextButton);
+        clipartImageView = findViewById(R.id.clipartImageView);
         // Method Calls
         setVisibilityAndEnablement();
         setOnOffSwitch();
@@ -72,20 +76,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setVisibilityAndEnablement() {
+        boolean isMasterEnabled = tinyDB.getBoolean(IS_MASTER_ENABLED);
         if (Methods.isAllPermissionsGranted(this)) {
             onOffSwitch.setEnabled(true);
             permissionsCardView.setVisibility(View.GONE);
-            onOffSwitch.setChecked(tinyDB.getBoolean(IS_MASTER_ENABLED));
+            onOffSwitch.setChecked(isMasterEnabled);
         } else {
             onOffSwitch.setEnabled(false);
             permissionsCardView.setVisibility(View.VISIBLE);
             onOffSwitch.setChecked(false);
         }
+        if (isMasterEnabled) {
+            clipartImageView.setImageResource(R.drawable.officer_on);
+        } else {
+            clipartImageView.setImageResource(R.drawable.officer_off);
+        }
     }
 
     private void setOnOffSwitch() {
         onOffSwitch.setOnCheckedChangeListener(
-                (buttonView, isChecked) -> tinyDB.putBoolean(IS_MASTER_ENABLED, isChecked));
+                (buttonView, isChecked) -> {
+                    tinyDB.putBoolean(IS_MASTER_ENABLED, isChecked);
+                    if (isChecked) {
+                        clipartImageView.setImageResource(R.drawable.officer_on);
+                    } else {
+                        clipartImageView.setImageResource(R.drawable.officer_off);
+                    }
+                });
     }
 
     private void setVersionTextButton() {
