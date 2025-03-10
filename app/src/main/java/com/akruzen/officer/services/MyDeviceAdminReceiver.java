@@ -1,17 +1,16 @@
-package com.akruzen.officer;
+package com.akruzen.officer.services;
 
-import static com.akruzen.officer.Constants.TinyDbKeys.IS_ADMIN_ENABLED;
+import static com.akruzen.officer.constants.TinyDbKeys.IS_ADMIN_ENABLED;
 
 import android.app.admin.DeviceAdminReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.akruzen.officer.lib.TinyDB;
 
-public class DeviceAdmin extends DeviceAdminReceiver {
+public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
 
     TinyDB tinyDB;
     @Override

@@ -1,4 +1,4 @@
-package com.akruzen.officer.Views;
+package com.akruzen.officer.views.custom;
 
 import android.content.Context;
 import android.content.res.TypedArray;

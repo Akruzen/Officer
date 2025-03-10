@@ -1,4 +1,4 @@
-package com.akruzen.officer.Constants;
+package com.akruzen.officer.constants;
 
 public class TinyDbKeys {
 

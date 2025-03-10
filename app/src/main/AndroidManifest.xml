@@ -18,7 +18,7 @@
         android:theme="@style/Theme.OFFicer"
         tools:targetApi="33">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
@@ -32,7 +32,7 @@
                 android:value="" />
         </activity>
         <service
-            android:name=".DialogAccessibility"
+            android:name=".services.DialogAccessibilityService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:label="@string/accessibility_label"
             android:description="@string/accessibility_description"
@@ -45,7 +45,7 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
         <receiver
-            android:name= ".DeviceAdmin"
+            android:name= ".services.MyDeviceAdminReceiver"
             android:label= "@string/admin_label"
             android:description="@string/admin_description"
             android:permission= "android.permission.BIND_DEVICE_ADMIN"

@@ -1,10 +1,11 @@
-package com.akruzen.officer;
+package com.akruzen.officer.ui;
 
-import static com.akruzen.officer.Constants.TinyDbKeys.IS_MASTER_ENABLED;
+import static com.akruzen.officer.constants.TinyDbKeys.IS_MASTER_ENABLED;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -12,16 +13,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.akruzen.officer.Functions.Methods;
+import com.akruzen.officer.R;
+import com.akruzen.officer.constants.TinyDbKeys;
+import com.akruzen.officer.functions.Methods;
 import com.akruzen.officer.lib.TinyDB;
+import com.akruzen.officer.services.DialogAccessibilityService;
+import com.akruzen.officer.views.dialog.DialogLabels;
+import com.akruzen.officer.views.dialog.IMaterialDialogActionsCallback;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.materialswitch.MaterialSwitch;
 
-import com.akruzen.officer.Constants.Strings;
+import com.akruzen.officer.constants.Links;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,12 +47,36 @@ public class MainActivity extends AppCompatActivity {
                 new ComponentName("com.android.settings", "com.android.settings.DeviceAdminSettings")));
     }
 
+    public void onUnableToGrantAccessibilityPress(View view) {
+        DialogLabels dialogLabels = new DialogLabels();
+        dialogLabels.setTitle(getResources().getString(R.string.accessibility_dialog_title))
+                .setMessage(getResources().getString(R.string.accessibility_dialog_message))
+                .setPositiveText(getResources().getString(R.string.go_to_app_info))
+                .setNegativeText(getResources().getString(R.string.dismiss))
+                .setCallback(new IMaterialDialogActionsCallback() {
+                    @Override
+                    public void onPositiveClick(DialogInterface dialogInterface) {
+                        IMaterialDialogActionsCallback.super.onPositiveClick(null);
+                        try {
+                            Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            intent.setData(Uri.parse("package:com.akruzen.officer"));
+                            startActivity(intent);
+                        } catch (SecurityException e) {
+                            Toast.makeText(MainActivity.this, "Cannot open app info, please open manually", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        Methods.getAlertDialog(this, dialogLabels).show();
+    }
+
     public void onContactButtonPress(View view) {
-        String uriString = Strings.LINKEDIN_LINK;
+        String uriString = Links.LINKEDIN_LINK;
         if (view.getId() == R.id.githubButton) {
-            uriString = Strings.GITHUB_LINK;
+            uriString = Links.GITHUB_LINK;
         } else if (view.getId() == R.id.discordButton) {
-            uriString = Strings.DISCORD_LINK;
+            uriString = Links.DISCORD_LINK;
+        } else if (view.getId() == R.id.sourcecodeButton) {
+            uriString = Links.SOURCE_CODE_LINK;
         }
         // Else default behaviour will be to open linked in
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uriString)));
@@ -77,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setVisibilityAndEnablement() {
         boolean isMasterEnabled = tinyDB.getBoolean(IS_MASTER_ENABLED);
+
         if (Methods.isAllPermissionsGranted(this)) {
             onOffSwitch.setEnabled(true);
             permissionsCardView.setVisibility(View.GONE);
@@ -86,10 +117,18 @@ public class MainActivity extends AppCompatActivity {
             permissionsCardView.setVisibility(View.VISIBLE);
             onOffSwitch.setChecked(false);
         }
+
         if (isMasterEnabled) {
             clipartImageView.setImageResource(R.drawable.officer_on);
         } else {
             clipartImageView.setImageResource(R.drawable.officer_off);
+        }
+
+        if (tinyDB.getBoolean(TinyDbKeys.IS_ADMIN_ENABLED)) {
+            findViewById(R.id.deviceAdminButton).setVisibility(View.GONE);
+        }
+        if (Methods.isAccessibilityServiceEnabled(this, DialogAccessibilityService.class)) {
+            findViewById(R.id.accessibilityButton).setVisibility(View.GONE);
         }
     }
 

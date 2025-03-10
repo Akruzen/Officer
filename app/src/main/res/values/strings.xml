@@ -3,5 +3,14 @@
     <string name="accessibility_label">Officer Accessibility</string>
     <string name="accessibility_description">To detect if a power menu is opened, Officer needs accessibility settings. You can be rest assured that this setting has no other malicious intent.</string>
     <string name="admin_label">Officer Admin Access</string>
-    <string name="admin_description">Now you may think why does this app require Device Admin access, but hey, if someone tries to shutdown your phone when it is locked you would want to prevent it, right? For this, Officer uses this privilege to lock your screen if this situation comes up.</string>
+    <string name="admin_description">Now you may think why does this app require Device Admin access, but hey, if someone tries to shutdown your phone when it is locked you would want to prevent it, right? Officer uses this privilege to lock your screen such situation comes up.</string>
+    <string name="accessibility_dialog_title">Grant Accessibility</string>
+    <string name="accessibility_dialog_message">On Android 13 and above, accessibility permission is blocked by default for applications that are not downloaded from the Google Play Store. However, you can still enable it by following these steps:\n\n
+    1. Try to enable the accessibility by clicking on \"Grant Accessibility Permission\" button above.\n
+    2. You will most probably see a \"Restricted Setting\" message. Make sure you open the popup dialog
+    saying \"For your security, this setting is currently unavailable\".\n
+    3. Only after this, go to App info page of this app and click on three dots menu in top right corner.\n
+    4. Click \"Allow restricted settings\".\n\n\n<u>Note:</u> This is an open source application. Rest assured that this setting has no other malicious intent.</string>
+    <string name="go_to_app_info">Go to app info</string>
+    <string name="dismiss">Dismiss</string>
 </resources>
