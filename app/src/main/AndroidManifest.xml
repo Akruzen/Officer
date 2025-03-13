@@ -6,7 +6,11 @@
         android:name="android.hardware.telephony"
         android:required="false" />
     <uses-permission android:name= "android.permission.CALL_PHONE" />
-    
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,7 +23,6 @@
         tools:targetApi="33">
         <activity
             android:name=".ui.MainActivity"
-            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,7 +48,7 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
         <receiver
-            android:name= ".services.MyDeviceAdminReceiver"
+            android:name= ".receivers.MyDeviceAdminReceiver"
             android:label= "@string/admin_label"
             android:description="@string/admin_description"
             android:permission= "android.permission.BIND_DEVICE_ADMIN"
@@ -57,6 +60,8 @@
                 <action android:name= "android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
+        <service android:name=".services.ScreenStateService"
+            android:foregroundServiceType="systemExempted"/>
     </application>
 
 </manifest>

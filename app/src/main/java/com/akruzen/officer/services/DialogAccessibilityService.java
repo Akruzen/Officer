@@ -10,6 +10,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
+import com.akruzen.officer.constants.TinyDbKeys;
 import com.akruzen.officer.lib.TinyDB;
 
 public class DialogAccessibilityService extends AccessibilityService {
@@ -46,7 +47,7 @@ public class DialogAccessibilityService extends AccessibilityService {
                 String packageName = event.getPackageName().toString();
 
                 if (packageName.equals("com.android.systemui")) {
-                    Log.d("AccessibilityService", "System UI detected with event: " + event);
+                    // Log.d("AccessibilityService", "System UI detected with event: " + event);
                     DevicePolicyManager devicePolicyManager = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
                     boolean isPowerMenuFlag1 = event.toString().contains("ClassName: com.android.systemui.globalactions.GlobalActionsDialogLite$ActionsDialogLite");
                     boolean isPowerMenuFlag2 = event.toString().contains("FullScreen: true");
@@ -56,6 +57,11 @@ public class DialogAccessibilityService extends AccessibilityService {
                         // Lock the device screen
                         devicePolicyManager.lockNow();
                         Log.i("AccessibilityService", "Device locked");
+                        // Store the current system time in milliseconds
+                        long currentTimeMillis = System.currentTimeMillis();
+                        tinyDB.putLong(TinyDbKeys.FORCED_SCREEN_LOCKED_TIME_IN_MILLIS, currentTimeMillis);
+                        // Set the forced lock flag to true
+                        tinyDB.putBoolean(TinyDbKeys.IS_DEVICE_FORCED_LOCKED, true);
                     }
                 }
             }

@@ -1,9 +1,8 @@
 package com.akruzen.officer.functions;
 
-import static com.akruzen.officer.constants.TinyDbKeys.IS_ADMIN_ENABLED;
-
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
+import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.pm.ServiceInfo;
 import android.view.accessibility.AccessibilityManager;
@@ -11,11 +10,11 @@ import android.view.accessibility.AccessibilityManager;
 import androidx.appcompat.app.AlertDialog;
 
 import com.akruzen.officer.services.DialogAccessibilityService;
-import com.akruzen.officer.lib.TinyDB;
 import com.akruzen.officer.views.dialog.DialogLabels;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Methods {
 
@@ -30,10 +29,22 @@ public class Methods {
         return false;
     }
 
+    public static boolean isAdminAccess(Context context) {
+        AtomicBoolean isAdminAccessFlag = new AtomicBoolean(false);
+        DevicePolicyManager policyManager = (DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+        if (policyManager.getActiveAdmins() != null) {
+            policyManager.getActiveAdmins().forEach(adminInfo -> {
+                if (adminInfo.getPackageName().equals(context.getPackageName())) {
+                    isAdminAccessFlag.set(true);
+                }
+            });
+        }
+        return isAdminAccessFlag.get();
+    }
+
     public static boolean isAllPermissionsGranted(Context context) {
-        TinyDB tinyDB = new TinyDB(context);
         boolean isAccessibilityServiceEnabled = isAccessibilityServiceEnabled(context, DialogAccessibilityService.class);
-        boolean isAppAdmin = tinyDB.getBoolean(IS_ADMIN_ENABLED);
+        boolean isAppAdmin = isAdminAccess(context);
         return isAccessibilityServiceEnabled && isAppAdmin;
     }
 

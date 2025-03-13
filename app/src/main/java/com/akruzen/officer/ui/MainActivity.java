@@ -20,6 +20,7 @@ import com.akruzen.officer.constants.TinyDbKeys;
 import com.akruzen.officer.functions.Methods;
 import com.akruzen.officer.lib.TinyDB;
 import com.akruzen.officer.services.DialogAccessibilityService;
+import com.akruzen.officer.services.ScreenStateService;
 import com.akruzen.officer.views.dialog.DialogLabels;
 import com.akruzen.officer.views.dialog.IMaterialDialogActionsCallback;
 import com.google.android.material.button.MaterialButton;
@@ -76,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (view.getId() == R.id.discordButton) {
             uriString = Links.DISCORD_LINK;
         } else if (view.getId() == R.id.sourcecodeButton) {
-            uriString = Links.SOURCE_CODE_LINK;
+            // uriString = Links.SOURCE_CODE_LINK;
+            startForegroundService(new Intent(this, ScreenStateService.class));
+            return;
         }
         // Else default behaviour will be to open linked in
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uriString)));
@@ -124,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             clipartImageView.setImageResource(R.drawable.officer_off);
         }
 
-        if (tinyDB.getBoolean(TinyDbKeys.IS_ADMIN_ENABLED)) {
+        if (Methods.isAdminAccess(this)) {
             findViewById(R.id.deviceAdminButton).setVisibility(View.GONE);
         }
         if (Methods.isAccessibilityServiceEnabled(this, DialogAccessibilityService.class)) {
