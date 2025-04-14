@@ -7,7 +7,7 @@ You sprint back to the café — too late. Someone snagged your phone and bam, i
 That's exactly why this app exists. It keeps your Pixel, or any other phone from being powered off when it’s locked. Simple. Smart. Secure.
 
 # Motivation
-I have built this app from my personal experience, where my device got stolen and I could do nothing about it except lodge a complaint at the local police station. I hope no one else encounters what I did. Any feedback and improvements are welcome! 🙂
+I have built this app from my personal experience, where my device got stolen and I could do nothing about it except lodge a complaint at the local police station. I hope no one else encounters what I did with the help of this app. Any feedback and improvements are welcome! 🙂
 
 # How does this work?
 For powering off your device, what do you do? Exactly. You open the power menu. This application detects that a power menu is opened and instantly locks the phone. Optionally, you can set a cooldown timer too! This means if someone tries to power off your device while it's locked, 
