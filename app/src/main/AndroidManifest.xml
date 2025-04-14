@@ -5,11 +5,12 @@
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
-    <uses-permission android:name= "android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OFFicer"
         tools:targetApi="33">
+        <activity
+            android:name=".ui.StrictSecuritySettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
@@ -34,34 +38,40 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <service
             android:name=".services.DialogAccessibilityService"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
-            android:label="@string/accessibility_label"
             android:description="@string/accessibility_description"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/accessibility_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accessibility-service"
                 android:resource="@xml/accessibility_service_config" />
         </service>
+
         <receiver
-            android:name= ".receivers.MyDeviceAdminReceiver"
-            android:label= "@string/admin_label"
+            android:name=".receivers.MyDeviceAdminReceiver"
             android:description="@string/admin_description"
-            android:permission= "android.permission.BIND_DEVICE_ADMIN"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/admin_label"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
             <meta-data
-                android:name= "android.app.device_admin"
-                android:resource= "@xml/policies" />
+                android:name="android.app.device_admin"
+                android:resource="@xml/policies" />
+
             <intent-filter>
-                <action android:name= "android.app.action.DEVICE_ADMIN_ENABLED" />
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
-        <service android:name=".services.ScreenStateService"
-            android:foregroundServiceType="systemExempted"/>
+
+        <service
+            android:name=".services.ScreenStateService"
+            android:foregroundServiceType="systemExempted" />
     </application>
 
 </manifest>

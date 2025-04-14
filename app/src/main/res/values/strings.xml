@@ -13,4 +13,12 @@
     4. Click \"Allow restricted settings\".\n\n\n<u>Note:</u> This is an open source application. Rest assured that this setting has no other malicious intent.</string>
     <string name="go_to_app_info">Go to app info</string>
     <string name="dismiss">Dismiss</string>
+    <string name="use_strict_security">Use strict security</string>
+    <string name="strict_security_settings">Strict Security Settings</string>
+    <string name="strict_security_desc">Turn screen off automatically for a specific time if tried to power off from lock screen. Less convenient, but more secure.</string>
+    <string name="info">Info</string>
+    <string name="strict_security_info">When this setting is on, if someone opens the power menu from the lock screen, the screen will turn off automatically.
+        A timer will then start, and during this time, the screen will turn off again if turned on. Once the timer ends, you can use your phone normally.
+        If someone tries to open the power menu again, the timer restarts. This makes it much harder for a thief to shut down the phone before it locks.</string>
+    <string name="set_timer_duration">Set timer duration in seconds</string>
 </resources>

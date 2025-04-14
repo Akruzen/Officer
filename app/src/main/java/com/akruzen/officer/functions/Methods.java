@@ -3,13 +3,18 @@ package com.akruzen.officer.functions;
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
+import android.util.Log;
 import android.view.accessibility.AccessibilityManager;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.akruzen.officer.services.DialogAccessibilityService;
+import com.akruzen.officer.services.ScreenStateService;
 import com.akruzen.officer.views.dialog.DialogLabels;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -71,6 +76,27 @@ public class Methods {
             });
         }
         return builder.create();
+    }
+
+    public static boolean isScreenStateServiceActive(Context context) {
+        ComponentName component = new ComponentName(context, ScreenStateService.class);
+        int status = context.getPackageManager().getComponentEnabledSetting(component);
+        if (status == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
+            return true;
+        } else if (status == PackageManager.COMPONENT_ENABLED_STATE_DISABLED) {
+            return false;
+        }
+        return false;
+    }
+
+    public static void setScreenStateService(Context context, boolean enabled) {
+        ComponentName component = new ComponentName(context, ScreenStateService.class);
+        if (enabled) {
+            context.getPackageManager().setComponentEnabledSetting(component, PackageManager.COMPONENT_ENABLED_STATE_ENABLED , PackageManager.DONT_KILL_APP);
+            context.startForegroundService(new Intent(context, ScreenStateService.class));
+        } else {
+            context.getPackageManager().setComponentEnabledSetting(component, PackageManager.COMPONENT_ENABLED_STATE_DISABLED , PackageManager.DONT_KILL_APP);
+        }
     }
 
 }

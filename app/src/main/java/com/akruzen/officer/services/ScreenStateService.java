@@ -54,7 +54,8 @@ public class ScreenStateService extends Service {
                     Log.d("ScreenStateService", "Screen ON detected at " + System.currentTimeMillis()/1000);
                     // Check if the device was forced locked
                     if (tinyDB.getBoolean(TinyDbKeys.IS_DEVICE_FORCED_LOCKED)) {
-                        int cooldownTimeInSeconds = 5;
+                        int cooldownTimeInSeconds = tinyDB.getInt(TinyDbKeys.COOLDOWN_TIMER_IN_MILLIS) / 1000;
+                        if (cooldownTimeInSeconds == 0) cooldownTimeInSeconds = 5; // Default value
                         long timeLeftInMillis = System.currentTimeMillis() - tinyDB.getLong(TinyDbKeys.FORCED_SCREEN_LOCKED_TIME_IN_MILLIS);
                         if (timeLeftInMillis < cooldownTimeInSeconds * 1000) {
                             // Lock the device again

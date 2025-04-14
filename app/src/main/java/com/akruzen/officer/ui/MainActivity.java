@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.akruzen.officer.R;
@@ -32,7 +33,7 @@ import com.akruzen.officer.constants.Links;
 
 public class MainActivity extends AppCompatActivity {
 
-    MaterialSwitch onOffSwitch;
+    MaterialSwitch onOffSwitch, strictSecuritySwitch;
     MaterialCardView permissionsCardView;
     TinyDB tinyDB;
     MaterialButton versionTextButton;
@@ -70,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
         Methods.getAlertDialog(this, dialogLabels).show();
     }
 
+    public void onConfigureStrictSecurityPress(View view) {
+        startActivity(new Intent(this, StrictSecuritySettingsActivity.class));
+    }
+
     public void onContactButtonPress(View view) {
         String uriString = Links.LINKEDIN_LINK;
         if (view.getId() == R.id.githubButton) {
@@ -77,9 +82,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (view.getId() == R.id.discordButton) {
             uriString = Links.DISCORD_LINK;
         } else if (view.getId() == R.id.sourcecodeButton) {
-            // uriString = Links.SOURCE_CODE_LINK;
-            startForegroundService(new Intent(this, ScreenStateService.class));
-            return;
+            uriString = Links.SOURCE_CODE_LINK;
         }
         // Else default behaviour will be to open linked in
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uriString)));
@@ -102,9 +105,10 @@ public class MainActivity extends AppCompatActivity {
         permissionsCardView = findViewById(R.id.permissionsCardView);
         versionTextButton = findViewById(R.id.versionTextButton);
         clipartImageView = findViewById(R.id.clipartImageView);
+        strictSecuritySwitch = findViewById(R.id.strictSecuritySwitch);
         // Method Calls
         setVisibilityAndEnablement();
-        setOnOffSwitch();
+        setSwitchesActions();
         setVersionTextButton();
     }
 
@@ -121,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
             onOffSwitch.setChecked(false);
         }
 
+        if (Methods.isScreenStateServiceActive(this)) {
+            strictSecuritySwitch.setChecked(true);
+        }
+
         if (isMasterEnabled) {
             clipartImageView.setImageResource(R.drawable.officer_on);
         } else {
@@ -135,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setOnOffSwitch() {
+    private void setSwitchesActions() {
         onOffSwitch.setOnCheckedChangeListener(
                 (buttonView, isChecked) -> {
                     tinyDB.putBoolean(IS_MASTER_ENABLED, isChecked);
@@ -145,6 +153,18 @@ public class MainActivity extends AppCompatActivity {
                         clipartImageView.setImageResource(R.drawable.officer_off);
                     }
                 });
+
+        strictSecuritySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                if (!Methods.isScreenStateServiceActive(this)) {
+                    Methods.setScreenStateService(this, true);
+                }
+            } else {
+                if (Methods.isScreenStateServiceActive(this)) {
+                    Methods.setScreenStateService(this, false);
+                }
+            }
+        });
     }
 
     private void setVersionTextButton() {
