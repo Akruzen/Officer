@@ -2,7 +2,11 @@ package com.akruzen.officer.ui;
 
 import static com.akruzen.officer.constants.TinyDbKeys.IS_MASTER_ENABLED;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import android.content.ComponentName;
 import android.content.DialogInterface;
@@ -13,15 +17,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.akruzen.officer.R;
-import com.akruzen.officer.constants.TinyDbKeys;
 import com.akruzen.officer.functions.Methods;
 import com.akruzen.officer.lib.TinyDB;
 import com.akruzen.officer.services.DialogAccessibilityService;
-import com.akruzen.officer.services.ScreenStateService;
 import com.akruzen.officer.views.dialog.DialogLabels;
 import com.akruzen.officer.views.dialog.IMaterialDialogActionsCallback;
 import com.google.android.material.button.MaterialButton;
@@ -97,7 +98,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.titleLinearLayout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
         // Initialize objects
         tinyDB = new TinyDB(this);
         // Find view by ID
