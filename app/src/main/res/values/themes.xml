@@ -9,4 +9,8 @@
         <item name="android:windowNoTitle">true</item>
         <item name="fontFamily">@font/product_sans</item>
     </style>
+    
+    <style name="Theme.OFFicer.RoundedFont" parent="Theme.OFFicer">
+        <item name="fontFamily">@font/google_sans_rounded_regular</item>
+    </style>
 </resources>

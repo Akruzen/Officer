@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/strict_security_settings"
-        android:textSize="24sp"
+        style="@style/Theme.OFFicer.RoundedFont"
+        android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

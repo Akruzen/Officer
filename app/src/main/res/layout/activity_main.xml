@@ -23,7 +23,8 @@
             android:layout_weight="1"
             android:padding="16dp"
             android:text="@string/app_name"
-            android:textSize="24sp" />
+            style="@style/Theme.OFFicer.RoundedFont"
+            android:textSize="28sp" />
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.Material3.Button.IconButton"
