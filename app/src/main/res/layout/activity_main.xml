@@ -213,11 +213,12 @@
                                 android:orientation="vertical">
 
                                 <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/setupCustomTriggerButton"
                                     style="@style/Widget.Material3.Button.TextButton"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:onClick="onSetCustomTriggerPress"
-                                    android:text="Setup"/>
+                                    android:text="@string/setup"/>
 
                             </LinearLayout>
 
@@ -265,7 +266,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:onClick="onConfigureStrictSecurityPress"
-                                    android:text="Configure"/>
+                                    android:text="@string/configure"/>
 
                             </LinearLayout>
 

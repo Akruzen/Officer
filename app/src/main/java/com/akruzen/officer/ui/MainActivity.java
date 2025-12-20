@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     MaterialSwitch onOffSwitch, strictSecuritySwitch;
     MaterialCardView permissionsCardView;
     TinyDB tinyDB;
-    MaterialButton versionTextButton;
+    MaterialButton versionTextButton, customTriggerButton;
 
     public void onAccessibilityButtonPress(View view) {
         Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         permissionsCardView = findViewById(R.id.permissionsCardView);
         versionTextButton = findViewById(R.id.versionTextButton);
         strictSecuritySwitch = findViewById(R.id.strictSecuritySwitch);
+        customTriggerButton = findViewById(R.id.setupCustomTriggerButton);
         // Method Calls
         setVisibilityAndEnablement();
         setSwitchesActions();
@@ -129,10 +130,12 @@ public class MainActivity extends AppCompatActivity {
             onOffSwitch.setEnabled(true);
             permissionsCardView.setVisibility(View.GONE);
             onOffSwitch.setChecked(isMasterEnabled);
+            customTriggerButton.setEnabled(true);
         } else {
             onOffSwitch.setEnabled(false);
             permissionsCardView.setVisibility(View.VISIBLE);
             onOffSwitch.setChecked(false);
+            customTriggerButton.setEnabled(false);
         }
 
         if (Methods.isScreenStateServiceActive(this)) {

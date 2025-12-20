@@ -1,6 +1,15 @@
 package com.akruzen.officer;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +17,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.radiobutton.MaterialRadioButton;
+
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Objects;
+
 public class CustomTriggerActivity extends AppCompatActivity {
+
+    EventBroadcastReceiver receiver;
+    private static final int MAX_ITEMS = 10;
+    private final LinkedHashSet<String> classNames = new LinkedHashSet<>();
+    LinearLayout eventContainer;
+    private MaterialRadioButton selectedRadio = null;
+    private String selectedClassName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +42,84 @@ public class CustomTriggerActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Find views by ID
+        eventContainer = findViewById(R.id.eventLinearLayout);
+
+        // Object creation
+        receiver = new EventBroadcastReceiver();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(receiver, new IntentFilter("com.akruzen.officer.SYSTEM_UI_EVENT"), RECEIVER_EXPORTED);
+        } else {
+            registerReceiver(receiver, new IntentFilter("com.akruzen.officer.SYSTEM_UI_EVENT"));
+        }
+    }
+
+    private void onNewEventReceived(String className) {
+        // If already present, skip
+        if (classNames.contains(className)) {
+            return;
+        }
+        classNames.add(className);
+        // Evict oldest if size > 10
+        if (classNames.size() > MAX_ITEMS) {
+            Iterator<String> it = classNames.iterator();
+            it.next();
+            it.remove();
+        }
+        renderList();
+    }
+
+    private void renderList() {
+        eventContainer.removeAllViews();
+        for (String name : classNames) {
+            eventContainer.addView(createRow(name));
+        }
+    }
+
+    private View createRow(String className) {
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setPadding(16, 8, 16, 8);
+
+        MaterialRadioButton radio = new MaterialRadioButton(this);
+        TextView text = new TextView(this);
+
+        text.setText(className);
+        text.setTextSize(14f);
+        text.setPadding(16, 0, 0, 0);
+
+        radio.setOnClickListener(v -> {
+            if (selectedRadio != null) {
+                selectedRadio.setChecked(false);
+            }
+            selectedRadio = radio;
+            selectedClassName = className;
+            radio.setChecked(true);
+        });
+
+        // Restore selection after re-render
+        if (className.equals(selectedClassName)) {
+            radio.setChecked(true);
+            selectedRadio = radio;
+        }
+
+        row.addView(radio);
+        row.addView(text);
+
+        return row;
+    }
+
+    private class EventBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Objects.equals(intent.getAction(), "com.akruzen.officer.SYSTEM_UI_EVENT")) {
+                String fullClassName = intent.getStringExtra("eventClassName");
+                if (fullClassName != null) {
+                    String className = fullClassName.replaceFirst("^com\\.android\\.systemui\\.", "");
+                    runOnUiThread(() -> onNewEventReceived(className));
+                }
+            }
+        }
     }
 }

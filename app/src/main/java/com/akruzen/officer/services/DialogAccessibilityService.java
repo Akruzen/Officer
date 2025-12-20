@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
@@ -42,7 +43,7 @@ public class DialogAccessibilityService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        Log.d("Sadashiv", "onAccessibilityEvent: " + event.getEventType());
+        // Log.d("Sadashiv", "onAccessibilityEvent: " + event.getEventType());
         try {
             if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
                 TinyDB tinyDB = new TinyDB(this);
@@ -66,6 +67,10 @@ public class DialogAccessibilityService extends AccessibilityService {
                         // Set the forced lock flag to true
                         tinyDB.putBoolean(TinyDbKeys.IS_DEVICE_FORCED_LOCKED, true);
                     }
+
+                    Intent intent = new Intent("com.akruzen.officer.SYSTEM_UI_EVENT");
+                    intent.putExtra("eventClassName", event.getClassName());
+                    sendBroadcast(intent);
                 }
             }
         } catch (Exception e) {

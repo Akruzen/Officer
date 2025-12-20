@@ -55,6 +55,7 @@
                             app:srcCompat="@drawable/info" />
 
                         <TextView
+                            style="@style/Theme.OFFicer.FatFont"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="18sp"
@@ -72,6 +73,12 @@
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/foreground" />
 
             <TextView
                 android:layout_width="wrap_content"
