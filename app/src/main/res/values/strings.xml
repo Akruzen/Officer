@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Officer</string>
+    <string name="missing_permissions">Missing Permissions</string>
     <string name="accessibility_label">Officer Accessibility</string>
     <string name="accessibility_description">To detect if a power menu is opened, Officer needs accessibility settings. You can be rest assured that this setting has no other malicious intent.</string>
     <string name="admin_label">Officer Admin Access</string>
@@ -21,4 +22,7 @@
         A timer will then start, and during this time, the screen will turn off again if turned on. Once the timer ends, you can use your phone normally.
         If someone tries to open the power menu again, the timer restarts. This makes it much harder for a thief to shut down the phone before it locks.</string>
     <string name="set_timer_duration">Set timer duration in seconds</string>
+    <string name="set_custom_trigger">Set custom trigger</string>
+    <string name="set_custom_info">Different phone manufacturers have different event triggers which get broadcasted when the power menu is open. Due to this, there is no one-size-fits all solution. Here, you can manually trigger the power menu and the app will detect a few events which were broadcasted. Try out all the options in the list of events below and select an option which works for your device.</string>
+    <string name="set_custom_trigger_desc">Set a custom trigger point for locking the screen. If the app is not working on your device, tap here.</string>
 </resources>

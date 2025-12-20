@@ -23,6 +23,9 @@
         android:theme="@style/Theme.OFFicer"
         tools:targetApi="33">
         <activity
+            android:name=".CustomTriggerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.StrictSecuritySettingsActivity"
             android:exported="false" />
         <activity
@@ -44,7 +47,8 @@
             android:description="@string/accessibility_description"
             android:exported="true"
             android:label="@string/accessibility_label"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            tools:ignore="AccessibilityPolicy">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>

@@ -19,6 +19,7 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 
+import com.akruzen.officer.CustomTriggerActivity;
 import com.akruzen.officer.R;
 import com.akruzen.officer.functions.Methods;
 import com.akruzen.officer.lib.TinyDB;
@@ -27,7 +28,6 @@ import com.akruzen.officer.views.dialog.DialogLabels;
 import com.akruzen.officer.views.dialog.IMaterialDialogActionsCallback;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.materialswitch.MaterialSwitch;
 
 import com.akruzen.officer.constants.Links;
@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     MaterialCardView permissionsCardView;
     TinyDB tinyDB;
     MaterialButton versionTextButton;
-    ShapeableImageView clipartImageView;
 
     public void onAccessibilityButtonPress(View view) {
         Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -74,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onConfigureStrictSecurityPress(View view) {
         startActivity(new Intent(this, StrictSecuritySettingsActivity.class));
+    }
+
+    public void onSetCustomTriggerPress(View view) {
+        startActivity(new Intent(this, CustomTriggerActivity.class));
     }
 
     public void onContactButtonPress(View view) {
@@ -112,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
         onOffSwitch = findViewById(R.id.officerSwitch);
         permissionsCardView = findViewById(R.id.permissionsCardView);
         versionTextButton = findViewById(R.id.versionTextButton);
-        clipartImageView = findViewById(R.id.clipartImageView);
         strictSecuritySwitch = findViewById(R.id.strictSecuritySwitch);
         // Method Calls
         setVisibilityAndEnablement();
@@ -137,12 +139,6 @@ public class MainActivity extends AppCompatActivity {
             strictSecuritySwitch.setChecked(true);
         }
 
-        if (isMasterEnabled) {
-            clipartImageView.setImageResource(R.drawable.officer_on);
-        } else {
-            clipartImageView.setImageResource(R.drawable.officer_off);
-        }
-
         if (Methods.isAdminAccess(this)) {
             findViewById(R.id.deviceAdminButton).setVisibility(View.GONE);
         }
@@ -152,16 +148,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setSwitchesActions() {
-        onOffSwitch.setOnCheckedChangeListener(
-                (buttonView, isChecked) -> {
-                    tinyDB.putBoolean(IS_MASTER_ENABLED, isChecked);
-                    if (isChecked) {
-                        clipartImageView.setImageResource(R.drawable.officer_on);
-                    } else {
-                        clipartImageView.setImageResource(R.drawable.officer_off);
-                    }
-                });
-
         strictSecuritySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 if (!Methods.isScreenStateServiceActive(this)) {

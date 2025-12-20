@@ -5,14 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.StrictSecuritySettingsActivity">
+    tools:context=".CustomTriggerActivity">
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="@string/strict_security_settings"
+        android:text="@string/set_custom_trigger"
         style="@style/Theme.OFFicer.RoundedFont"
         android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,8 +29,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
 
             <com.google.android.material.card.MaterialCardView
                 style="@style/Widget.Material3.CardView.Filled"
@@ -68,28 +68,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="@string/strict_security_info"/>
+                        android:text="@string/set_custom_info"/>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="16dp"
-                android:textSize="16sp"
-                android:text="@string/set_timer_duration"/>
-
-            <com.google.android.material.slider.Slider
-                android:id="@+id/durationSlider"
-                style="@style/Widget.Material3.Slider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:valueFrom="5"
-                android:value="15"
-                android:valueTo="60"
-                android:stepSize="5"/>
-
         </LinearLayout>
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
