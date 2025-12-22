@@ -13,4 +13,8 @@
     <style name="Theme.OFFicer.RoundedFont" parent="Theme.OFFicer">
         <item name="fontFamily">@font/google_sans_rounded_regular</item>
     </style>
+
+    <style name="Theme.OFFicer.FatFont" parent="Theme.OFFicer">
+        <item name="fontFamily">@font/bagel_fat_one_regular</item>
+    </style>
 </resources>

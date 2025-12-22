@@ -48,16 +48,19 @@ public class DialogAccessibilityService extends AccessibilityService {
             if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
                 TinyDB tinyDB = new TinyDB(this);
                 String packageName = event.getPackageName().toString();
-                Log.d("Sadashiv", "Window state change detected with event: " + event);
+                // Log.d("Sadashiv", "Window state change detected with event: " + event);
 
                 if (packageName.equals("com.android.systemui")) {
-                    Log.d("Sadashiv", "System UI detected with event: " + event);
+                    // Log.d("Sadashiv", "System UI detected with event: " + event);
                     DevicePolicyManager devicePolicyManager = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
+                    String customTrigger = tinyDB.getString(TinyDbKeys.CUSTOM_TRIGGER);
                     boolean isPowerMenuFlag1 = event.toString().contains("ClassName: com.android.systemui.globalactions.GlobalActionsDialogLite$3");
                     boolean isPowerMenuFlag2 = event.toString().contains("FullScreen: true");
+                    boolean isPowerMenuCustomFlag = tinyDB.getBoolean(TinyDbKeys.IS_CUSTOM_TRIGGER_ENABLED) && customTrigger != null &&
+                            !customTrigger.isEmpty() && event.toString().contains("ClassName: com.android.systemui." + customTrigger);
                     boolean isMasterEnabled = tinyDB.getBoolean(IS_MASTER_ENABLED);
                     boolean isScreenLocked = ((KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE)).inKeyguardRestrictedInputMode();
-                    if (isPowerMenuFlag1 && isPowerMenuFlag2 && isScreenLocked && isMasterEnabled) {
+                    if ((isPowerMenuFlag1 || isPowerMenuCustomFlag) && isPowerMenuFlag2 && isScreenLocked && isMasterEnabled) {
                         // Lock the device screen
                         devicePolicyManager.lockNow();
                         Log.i("AccessibilityService", "Device locked");
@@ -68,9 +71,12 @@ public class DialogAccessibilityService extends AccessibilityService {
                         tinyDB.putBoolean(TinyDbKeys.IS_DEVICE_FORCED_LOCKED, true);
                     }
 
-                    Intent intent = new Intent("com.akruzen.officer.SYSTEM_UI_EVENT");
-                    intent.putExtra("eventClassName", event.getClassName());
-                    sendBroadcast(intent);
+                    // Useful only for detecting custom trigger. Don't send broadcast if screen is locked
+                    if (!isScreenLocked) {
+                        Intent intent = new Intent("com.akruzen.officer.SYSTEM_UI_EVENT");
+                        intent.putExtra("eventClassName", event.getClassName());
+                        sendBroadcast(intent);
+                    }
                 }
             }
         } catch (Exception e) {

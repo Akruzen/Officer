@@ -1,8 +1,10 @@
 package com.akruzen.officer.ui;
 
+import static com.akruzen.officer.constants.TinyDbKeys.IS_CUSTOM_TRIGGER_ENABLED;
 import static com.akruzen.officer.constants.TinyDbKeys.IS_MASTER_ENABLED;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -17,10 +19,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.akruzen.officer.CustomTriggerActivity;
 import com.akruzen.officer.R;
+import com.akruzen.officer.constants.TinyDbKeys;
 import com.akruzen.officer.functions.Methods;
 import com.akruzen.officer.lib.TinyDB;
 import com.akruzen.officer.services.DialogAccessibilityService;
@@ -34,7 +38,7 @@ import com.akruzen.officer.constants.Links;
 
 public class MainActivity extends AppCompatActivity {
 
-    MaterialSwitch onOffSwitch, strictSecuritySwitch;
+    MaterialSwitch onOffSwitch, strictSecuritySwitch, customTriggerSwitch;
     MaterialCardView permissionsCardView;
     TinyDB tinyDB;
     MaterialButton versionTextButton, customTriggerButton;
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         versionTextButton = findViewById(R.id.versionTextButton);
         strictSecuritySwitch = findViewById(R.id.strictSecuritySwitch);
         customTriggerButton = findViewById(R.id.setupCustomTriggerButton);
+        customTriggerSwitch = findViewById(R.id.customTriggerSwitch);
         // Method Calls
         setVisibilityAndEnablement();
         setSwitchesActions();
@@ -148,9 +153,13 @@ public class MainActivity extends AppCompatActivity {
         if (Methods.isAccessibilityServiceEnabled(this, DialogAccessibilityService.class)) {
             findViewById(R.id.accessibilityButton).setVisibility(View.GONE);
         }
+
+        customTriggerSwitch.setChecked(tinyDB.getBoolean(IS_CUSTOM_TRIGGER_ENABLED));
     }
 
     private void setSwitchesActions() {
+        onOffSwitch.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> tinyDB.putBoolean(IS_MASTER_ENABLED, isChecked));
         strictSecuritySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 if (!Methods.isScreenStateServiceActive(this)) {
@@ -160,6 +169,12 @@ public class MainActivity extends AppCompatActivity {
                 if (Methods.isScreenStateServiceActive(this)) {
                     Methods.setScreenStateService(this, false);
                 }
+            }
+        });
+        customTriggerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull CompoundButton compoundButton, boolean isChecked) {
+                tinyDB.putBoolean(IS_CUSTOM_TRIGGER_ENABLED, isChecked);
             }
         });
     }

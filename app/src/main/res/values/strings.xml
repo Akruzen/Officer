@@ -22,12 +22,15 @@
         A timer will then start, and during this time, the screen will turn off again if turned on. Once the timer ends, you can use your phone normally.
         If someone tries to open the power menu again, the timer restarts. This makes it much harder for a thief to shut down the phone before it locks.</string>
     <string name="set_timer_duration">Set timer duration in seconds</string>
-    <string name="set_custom_trigger">Set custom trigger</string>
+    <string name="use_custom_trigger">Use custom trigger</string>
     <string name="set_custom_info">Different phone manufacturers have different event triggers which get broadcasted when the power menu is opened. Hence, there is no one-size-fits all solution. Here, you can manually trigger the power menu and the app will detect a few related events which were broadcasted. Try out all the options in the list of events below and select an option which works for your device.</string>
-    <string name="set_custom_trigger_desc">Set a custom trigger point for locking the screen. If the app is not working on your device, tap here.</string>
+    <string name="set_custom_trigger_desc">Set a custom trigger point for locking the screen. If the app is not working on your device, try setting this up.</string>
     <string name="listening_for_events">Please open your device\'s power menu.\nListening for events…</string>
     <string name="setup">Setup</string>
     <string name="configure">Configure</string>
     <string name="detected_events">Detected events:</string>
     <string name="detected_events_hint">Generally, a power menu will have a name similar to \"Global Actions Dialog\".</string>
+    <string name="choose_a_trigger_from_the_options_below">Choose a trigger from the options below:</string>
+    <string name="current_trigger">Current trigger: </string>
+    <string name="save">SAVE</string>
 </resources>

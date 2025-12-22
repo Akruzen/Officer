@@ -196,7 +196,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/set_custom_trigger"/>
+                                    android:text="@string/use_custom_trigger"/>
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -212,6 +212,12 @@
                                 android:layout_weight="0.8"
                                 android:orientation="vertical">
 
+                                <com.google.android.material.materialswitch.MaterialSwitch
+                                    android:id="@+id/customTriggerSwitch"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"/>
+
                                 <com.google.android.material.button.MaterialButton
                                     android:id="@+id/setupCustomTriggerButton"
                                     style="@style/Widget.Material3.Button.TextButton"
@@ -223,6 +229,11 @@
                             </LinearLayout>
 
                         </LinearLayout>
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:alpha="0.5"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
