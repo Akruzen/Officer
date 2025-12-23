@@ -1,6 +1,7 @@
 package com.akruzen.officer.ui;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ public class StrictSecuritySettingsActivity extends AppCompatActivity {
 
     Slider durartionSlider;
     TinyDB tinyDB;
+    TextView strictSecurityDurationTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class StrictSecuritySettingsActivity extends AppCompatActivity {
         tinyDB = new TinyDB(this);
         // Find views by Ids
         durartionSlider = findViewById(R.id.durationSlider);
+        strictSecurityDurationTV = findViewById(R.id.strictSecurityDurationTV);
         // Add listeners
         durartionSlider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
             @Override
@@ -41,6 +44,7 @@ public class StrictSecuritySettingsActivity extends AppCompatActivity {
             public void onStopTrackingTouch(@NonNull Slider slider) {
                 int durationInMillis = (int) slider.getValue() * 1000;
                 tinyDB.putInt(TinyDbKeys.COOLDOWN_TIMER_IN_MILLIS, durationInMillis);
+                strictSecurityDurationTV.setText("Duration: " + (int) slider.getValue() + " seconds");
             }
         });
         // Method calls
@@ -50,5 +54,6 @@ public class StrictSecuritySettingsActivity extends AppCompatActivity {
     private void setViews() {
         int durationInSeconds = tinyDB.getInt(TinyDbKeys.COOLDOWN_TIMER_IN_MILLIS) / 1000;
         if (durationInSeconds != 0) durartionSlider.setValue(durationInSeconds);
+        strictSecurityDurationTV.setText("Duration: " + durationInSeconds + " seconds");
     }
 }
