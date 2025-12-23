@@ -3,9 +3,12 @@ package com.akruzen.officer;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,6 +22,8 @@ import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class AboutActivity extends AppCompatActivity {
+
+    TextView versionTextView;
 
     public void onContactButtonPress(View view) {
         String uriString = Links.LINKEDIN_LINK;
@@ -62,6 +67,18 @@ public class AboutActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        versionTextView = findViewById(R.id.versionNameTextView);
+
+        try {
+            PackageInfo packageInfo;
+            packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String versionName = "Version: " + packageInfo.versionName.split("-")[1].trim();
+            versionTextView.setText(versionName);
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showChangeLogBottomSheet() {
