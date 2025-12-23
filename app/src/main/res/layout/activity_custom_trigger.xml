@@ -9,11 +9,11 @@
 
     <TextView
         android:id="@+id/textView3"
+        style="@style/Theme.OFFicer.RoundedFont"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/use_custom_trigger"
-        style="@style/Theme.OFFicer.RoundedFont"
         android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -33,4 +33,14 @@
     <string name="choose_a_trigger_from_the_options_below">Choose a trigger from the options below:</string>
     <string name="current_trigger">Current trigger: </string>
     <string name="save">SAVE</string>
+    <string name="about">About</string>
+    <string name="open_source_licenses">Open Source Licenses</string>
+    <string name="view_source_code">View Source Code</string>
+    <string name="changelog">Changelog</string>
+
+<!--    Release Note Strings-->
+    <string name="r1.0.0">- Initial release</string>
+    <string name="r1.0.1">- Added custom triggers\n- Moved About section to new page\n- Added Changelog page\n- Added open source licenses
+    \n- Migrated buttons to match expressive theming\n- Added new fonts: Google Rounded Sans, Bagel Fat\n- Fixed issue where title appeared behind status bar</string>
+    <string name="about_app">About App</string>
 </resources>

@@ -23,6 +23,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akruzen.officer.AboutActivity;
 import com.akruzen.officer.CustomTriggerActivity;
 import com.akruzen.officer.R;
 import com.akruzen.officer.functions.Methods;
@@ -42,11 +43,14 @@ public class MainActivity extends AppCompatActivity {
     MaterialCardView permissionsCardView;
     TinyDB tinyDB;
     MaterialButton customTriggerButton;
-    TextView versionTextView;
 
     public void onAccessibilityButtonPress(View view) {
         Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
         startActivity(intent);
+    }
+
+    public void onAboutButtonPress(View view) {
+        startActivity(new Intent(this, AboutActivity.class));
     }
 
     public void onDeviceAdminButtonPress(View view) {
@@ -84,19 +88,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, CustomTriggerActivity.class));
     }
 
-    public void onContactButtonPress(View view) {
-        String uriString = Links.LINKEDIN_LINK;
-        if (view.getId() == R.id.githubButton) {
-            uriString = Links.GITHUB_LINK;
-        } else if (view.getId() == R.id.discordButton) {
-            uriString = Links.DISCORD_LINK;
-        } else if (view.getId() == R.id.sourcecodeButton) {
-            uriString = Links.SOURCE_CODE_LINK;
-        }
-        // Else default behaviour will be to open linked in
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uriString)));
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -119,14 +110,12 @@ public class MainActivity extends AppCompatActivity {
         // Find view by ID
         onOffSwitch = findViewById(R.id.officerSwitch);
         permissionsCardView = findViewById(R.id.permissionsCardView);
-        versionTextView = findViewById(R.id.versionTextButton);
         strictSecuritySwitch = findViewById(R.id.strictSecuritySwitch);
         customTriggerButton = findViewById(R.id.setupCustomTriggerButton);
         customTriggerSwitch = findViewById(R.id.customTriggerSwitch);
         // Method Calls
         setVisibilityAndEnablement();
         setSwitchesActions();
-        setVersionTextButton();
     }
 
     private void setVisibilityAndEnablement() {
@@ -180,17 +169,5 @@ public class MainActivity extends AppCompatActivity {
                 tinyDB.putBoolean(IS_CUSTOM_TRIGGER_ENABLED, isChecked);
             }
         });
-    }
-
-    private void setVersionTextButton() {
-        try {
-            PackageInfo packageInfo;
-            packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            String versionName = getString(R.string.app_name) + " - " + packageInfo.versionName.split("-")[1].trim();
-            versionTextView.setText(versionName);
-        }
-        catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }

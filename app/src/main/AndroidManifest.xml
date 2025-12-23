@@ -23,6 +23,9 @@
         android:theme="@style/Theme.OFFicer"
         tools:targetApi="33">
         <activity
+            android:name=".AboutActivity"
+            android:exported="false" />
+        <activity
             android:name=".CustomTriggerActivity"
             android:exported="false" />
         <activity
