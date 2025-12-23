@@ -53,7 +53,11 @@ public class StrictSecuritySettingsActivity extends AppCompatActivity {
 
     private void setViews() {
         int durationInSeconds = tinyDB.getInt(TinyDbKeys.COOLDOWN_TIMER_IN_MILLIS) / 1000;
-        if (durationInSeconds != 0) durartionSlider.setValue(durationInSeconds);
-        strictSecurityDurationTV.setText("Duration: " + durationInSeconds + " seconds");
+        if (durationInSeconds != 0) {
+            durartionSlider.setValue(durationInSeconds);
+            strictSecurityDurationTV.setText("Duration: " + durationInSeconds + " seconds");
+        } else {
+            strictSecurityDurationTV.setText("Duration: " + 15 + " seconds");
+        }
     }
 }
