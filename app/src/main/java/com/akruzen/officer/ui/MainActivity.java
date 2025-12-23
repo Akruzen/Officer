@@ -20,11 +20,11 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akruzen.officer.CustomTriggerActivity;
 import com.akruzen.officer.R;
-import com.akruzen.officer.constants.TinyDbKeys;
 import com.akruzen.officer.functions.Methods;
 import com.akruzen.officer.lib.TinyDB;
 import com.akruzen.officer.services.DialogAccessibilityService;
@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     MaterialSwitch onOffSwitch, strictSecuritySwitch, customTriggerSwitch;
     MaterialCardView permissionsCardView;
     TinyDB tinyDB;
-    MaterialButton versionTextButton, customTriggerButton;
+    MaterialButton customTriggerButton;
+    TextView versionTextView;
 
     public void onAccessibilityButtonPress(View view) {
         Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         // Find view by ID
         onOffSwitch = findViewById(R.id.officerSwitch);
         permissionsCardView = findViewById(R.id.permissionsCardView);
-        versionTextButton = findViewById(R.id.versionTextButton);
+        versionTextView = findViewById(R.id.versionTextButton);
         strictSecuritySwitch = findViewById(R.id.strictSecuritySwitch);
         customTriggerButton = findViewById(R.id.setupCustomTriggerButton);
         customTriggerSwitch = findViewById(R.id.customTriggerSwitch);
@@ -136,11 +137,13 @@ public class MainActivity extends AppCompatActivity {
             permissionsCardView.setVisibility(View.GONE);
             onOffSwitch.setChecked(isMasterEnabled);
             customTriggerButton.setEnabled(true);
+            customTriggerSwitch.setEnabled(true);
         } else {
             onOffSwitch.setEnabled(false);
             permissionsCardView.setVisibility(View.VISIBLE);
             onOffSwitch.setChecked(false);
             customTriggerButton.setEnabled(false);
+            customTriggerSwitch.setEnabled(false);
         }
 
         if (Methods.isScreenStateServiceActive(this)) {
@@ -183,8 +186,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             PackageInfo packageInfo;
             packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            String versionName = "Version: " + packageInfo.versionName.split("-")[1].trim();
-            versionTextButton.setText(versionName);
+            String versionName = getString(R.string.app_name) + " - " + packageInfo.versionName.split("-")[1].trim();
+            versionTextView.setText(versionName);
         }
         catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

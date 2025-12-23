@@ -27,12 +27,12 @@
             android:textSize="28sp" />
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button.IconButton"
-            tools:visibility="visible"
-            android:visibility="gone"
+            style="@style/Widget.Material3Expressive.Button.OutlinedButton"
+            android:layout_marginEnd="16dp"
+            app:icon="@drawable/diamond_cloud"
+            android:text="About"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/round_settings_24" />
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
@@ -93,7 +93,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/deviceAdminButton"
-                        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                        style="@style/Widget.Material3Expressive.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="onDeviceAdminButtonPress"
@@ -102,7 +102,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/accessibilityButton"
-                        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                        style="@style/Widget.Material3Expressive.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="onAccessibilityButtonPress"
@@ -110,7 +110,7 @@
                         app:icon="@drawable/round_accessibility_new_24" />
 
                     <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.Material3.Button.TextButton"
+                        style="@style/Widget.Material3Expressive.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="onUnableToGrantAccessibilityPress"
@@ -190,7 +190,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.3"
+                                android:layout_weight="0.4"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -214,15 +214,18 @@
 
                                 <com.google.android.material.materialswitch.MaterialSwitch
                                     android:id="@+id/customTriggerSwitch"
+                                    android:enabled="false"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"/>
 
                                 <com.google.android.material.button.MaterialButton
                                     android:id="@+id/setupCustomTriggerButton"
-                                    style="@style/Widget.Material3.Button.TextButton"
-                                    android:layout_width="match_parent"
+                                    style="@style/Widget.Material3Expressive.Button.OutlinedButton"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="8dp"
+                                    android:layout_gravity="center"
                                     android:onClick="onSetCustomTriggerPress"
                                     android:text="@string/setup"/>
 
@@ -233,6 +236,7 @@
                         <com.google.android.material.divider.MaterialDivider
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginVertical="8dp"
                             android:alpha="0.5"/>
 
                         <LinearLayout
@@ -244,7 +248,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.3"
+                                android:layout_weight="0.4"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -273,9 +277,11 @@
                                     android:layout_gravity="center"/>
 
                                 <com.google.android.material.button.MaterialButton
-                                    style="@style/Widget.Material3.Button.TextButton"
-                                    android:layout_width="match_parent"
+                                    style="@style/Widget.Material3Expressive.Button.OutlinedButton"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginHorizontal="8dp"
                                     android:onClick="onConfigureStrictSecurityPress"
                                     android:text="@string/configure"/>
 
@@ -297,7 +303,7 @@
                 android:gravity="bottom"
                 android:orientation="vertical"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="8dp">
+                android:layout_marginVertical="12dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
@@ -335,14 +341,6 @@
                                     app:srcCompat="@drawable/ic_launcher_foreground" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginBottom="8dp"
-                                    android:text="Officer"
-                                    android:textAlignment="center" />
-
-                                <com.google.android.material.button.MaterialButton
                                     android:id="@+id/versionTextButton"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -351,7 +349,17 @@
                                     android:text="1.0.0" />
 
                                 <com.google.android.material.button.MaterialButton
-                                    style="@style/Widget.Material3.Button.TextButton"
+                                    style="@style/Widget.Material3Expressive.Button.TextButton"
+                                    android:id="@+id/changelogButton"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:onClick="onContactButtonPress"
+                                    android:text="Changelog" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    style="@style/Widget.Material3Expressive.Button.TextButton"
                                     android:id="@+id/sourcecodeButton"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -393,23 +401,24 @@
                                     android:layout_marginBottom="8dp"
                                     android:text="Omkar Phadke" />
 
-                                <LinearLayout
+                                <com.google.android.material.button.MaterialButtonGroup
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:orientation="horizontal">
+                                    android:spacing="2dp"
+                                    android:gravity="center" >
 
                                     <com.google.android.material.button.MaterialButton
                                         android:id="@+id/githubButton"
-                                        style="@style/Widget.Material3.Button.IconButton.Outlined"
+                                        style="@style/Widget.Material3Expressive.Button.IconButton.Outlined"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+
                                         android:onClick="onContactButtonPress"
                                         app:icon="@drawable/github" />
 
                                     <com.google.android.material.button.MaterialButton
                                         android:id="@+id/linkedInButton"
-                                        style="@style/Widget.Material3.Button.IconButton.Outlined"
+                                        style="@style/Widget.Material3Expressive.Button.IconButton.Outlined"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:onClick="onContactButtonPress"
@@ -417,13 +426,13 @@
 
                                     <com.google.android.material.button.MaterialButton
                                         android:id="@+id/discordButton"
-                                        style="@style/Widget.Material3.Button.IconButton.Outlined"
+                                        style="@style/Widget.Material3Expressive.Button.IconButton.Outlined"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:onClick="onContactButtonPress"
                                         app:icon="@drawable/discord" />
 
-                                </LinearLayout>
+                                </com.google.android.material.button.MaterialButtonGroup>
 
                             </LinearLayout>
 
