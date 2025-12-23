@@ -1,9 +1,12 @@
 package com.akruzen.officer;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +31,17 @@ public class AboutActivity extends AppCompatActivity {
         }
         // Else default behaviour will be to open linked in
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uriString)));
+    }
+
+    public void onShareViaLinkClicked(View view) {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Officer App Link", Links.APP_RELEASES_LINK);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(this, "Link copied!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, Links.APP_RELEASES_LINK);
+        startActivity(Intent.createChooser(intent, "Share the app link!"));
     }
 
     public void openSourceLicencesTapped(View view) {
