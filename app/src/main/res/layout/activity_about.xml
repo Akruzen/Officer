@@ -34,6 +34,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 style="@style/Widget.Material3.CardView.Outlined"
+                android:backgroundTint="@color/brand_primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -64,10 +65,12 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/Theme.OFFicer.FatFont"
                             android:id="@+id/textView13"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal|top"
+                            android:textColor="@color/brand_off_white"
                             android:text="@string/app_name"
                             android:textSize="24sp"
                             android:textStyle="normal" />
@@ -133,6 +136,8 @@
                             android:text="Developed &amp; designed by" />
 
                         <TextView
+                            style="@style/Theme.OFFicer.RoundedFont"
+                            android:textStyle="bold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="16dp"
@@ -141,31 +146,40 @@
                         <com.google.android.material.button.MaterialButtonGroup
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:spacing="2dp"
+                            android:spacing="8dp"
                             android:gravity="center" >
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/githubButton"
-                                style="@style/Widget.Material3Expressive.Button.IconButton.Outlined"
+                                style="@style/Widget.Material3Expressive.Button.IconButton.Filled"
+                                app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.IconButton.Medium.Narrow.Square"
+                                android:backgroundTint="@color/brand_primary"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:onClick="onContactButtonPress"
+                                app:iconTint="@color/brand_off_white"
                                 app:icon="@drawable/github" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/linkedInButton"
-                                style="@style/Widget.Material3Expressive.Button.IconButton.Outlined"
+                                style="@style/Widget.Material3Expressive.Button.IconButton.Filled"
+                                app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.IconButton.Medium.Narrow.Square"
+                                android:backgroundTint="@color/brand_tertiary"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:onClick="onContactButtonPress"
+                                app:iconTint="@color/brand_off_white"
                                 app:icon="@drawable/linkedin" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/discordButton"
-                                style="@style/Widget.Material3Expressive.Button.IconButton.Outlined"
+                                style="@style/Widget.Material3Expressive.Button.IconButton.Filled"
+                                app:materialSizeOverlay="@style/SizeOverlay.Material3Expressive.Button.IconButton.Medium.Narrow.Square"
+                                android:backgroundTint="@color/brand_quaternary"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:onClick="onContactButtonPress"
+                                app:iconTint="@color/brand_off_white"
                                 app:icon="@drawable/discord" />
 
                         </com.google.android.material.button.MaterialButtonGroup>

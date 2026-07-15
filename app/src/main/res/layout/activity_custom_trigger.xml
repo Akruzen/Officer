@@ -65,6 +65,7 @@
                     </LinearLayout>
 
                     <TextView
+                        style="@style/Theme.OFFicer.RoundedFont"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -114,6 +115,7 @@
                         android:layout_weight="1" />
 
                     <TextView
+                        style="@style/Theme.OFFicer.RoundedFont"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -135,6 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:alpha="0.5"
+                android:visibility="gone"
                 android:text="@string/detected_events_hint" />
 
             <com.google.android.material.card.MaterialCardView
@@ -161,7 +164,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:alpha="0.5"
                             android:layout_weight="1"
                             app:srcCompat="@drawable/blank_disc" />
 
@@ -189,18 +191,19 @@
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        style="@style/Theme.OFFicer.FatFont"
         android:id="@+id/saveFab"
+        style="@style/Theme.OFFicer.FatFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:clickable="true"
-        android:onClick="saveClicked"
         android:enabled="false"
-        app:icon="@drawable/save"
+        android:onClick="saveClicked"
         android:text="@string/save"
+        app:icon="@drawable/save"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:materialThemeOverlay="@style/ThemeOverlay.Material3Expressive.FloatingActionButton.Primary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
