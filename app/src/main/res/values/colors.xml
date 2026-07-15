@@ -9,8 +9,18 @@
     <color name="red">#FF7575</color>
     <color name="dynamic_light">#BBDEFB</color>
     <color name="dynamic_lighter">#D2E3F8</color>
+    <color name="dynamic_medium">#B0C6FF</color>
     <color name="dynamic_secondary_light">#E1D2F8</color>
     <color name="foreground">@color/black</color>
     <color name="background">@color/white</color>
     <color name="icon_background">#FF018786</color>
+    <color name="dynamic_background">#B0C6FF</color>
+
+<!--    Brand Colours-->
+    <color name="brand_primary">#5A9CB5</color>
+    <color name="brand_secondary">#FACE68</color>
+    <color name="brand_tertiary">#FAAC68</color>
+    <color name="brand_quaternary">#FA6868</color>
+    <color name="brand_matte_black">#28282B</color>
+    <color name="brand_off_white">#FAF9F6</color>
 </resources>

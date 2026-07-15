@@ -23,6 +23,9 @@
         android:theme="@style/Theme.OFFicer"
         tools:targetApi="36">
         <activity
+            android:name=".WelcomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".AboutActivity"
             android:exported="false" />
         <activity

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.OFFicer" parent="Theme.Material3.DynamicColors.DayNight">
+    <style name="Theme.OFFicer" parent="Theme.Material3Expressive.DynamicColors.DayNight">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
@@ -16,5 +16,9 @@
 
     <style name="Theme.OFFicer.FatFont" parent="Theme.OFFicer">
         <item name="fontFamily">@font/bagel_fat_one_regular</item>
+    </style>
+
+    <style name="Theme.OFFicer.Bangers" parent="Theme.OFFicer">
+        <item name="fontFamily">@font/bangers_regular</item>
     </style>
 </resources>

@@ -13,19 +13,18 @@ import androidx.core.view.WindowInsetsCompat;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akruzen.officer.AboutActivity;
 import com.akruzen.officer.CustomTriggerActivity;
 import com.akruzen.officer.R;
+import com.akruzen.officer.WelcomeActivity;
+import com.akruzen.officer.constants.TinyDbKeys;
 import com.akruzen.officer.functions.Methods;
 import com.akruzen.officer.lib.TinyDB;
 import com.akruzen.officer.services.DialogAccessibilityService;
@@ -34,8 +33,6 @@ import com.akruzen.officer.views.dialog.IMaterialDialogActionsCallback;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.materialswitch.MaterialSwitch;
-
-import com.akruzen.officer.constants.Links;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,21 +59,7 @@ public class MainActivity extends AppCompatActivity {
         DialogLabels dialogLabels = new DialogLabels();
         dialogLabels.setTitle(getResources().getString(R.string.accessibility_dialog_title))
                 .setMessage(getResources().getString(R.string.accessibility_dialog_message))
-                .setPositiveText(getResources().getString(R.string.go_to_app_info))
-                .setNegativeText(getResources().getString(R.string.dismiss))
-                .setCallback(new IMaterialDialogActionsCallback() {
-                    @Override
-                    public void onPositiveClick(DialogInterface dialogInterface) {
-                        IMaterialDialogActionsCallback.super.onPositiveClick(null);
-                        try {
-                            Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            intent.setData(Uri.parse("package:com.akruzen.officer"));
-                            startActivity(intent);
-                        } catch (SecurityException e) {
-                            Toast.makeText(MainActivity.this, "Cannot open app info, please open manually", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                .setNegativeText(getResources().getString(R.string.dismiss));
         Methods.getAlertDialog(this, dialogLabels).show();
     }
 
@@ -116,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
         // Method Calls
         setVisibilityAndEnablement();
         setSwitchesActions();
+
+        if (!tinyDB.getBoolean(TinyDbKeys.IS_OLD_USER)) {
+            startActivity(new Intent(this, WelcomeActivity.class));
+            tinyDB.putBoolean(TinyDbKeys.IS_OLD_USER, true);
+        }
     }
 
     private void setVisibilityAndEnablement() {

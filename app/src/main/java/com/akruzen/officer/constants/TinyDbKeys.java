@@ -8,5 +8,6 @@ public class TinyDbKeys {
     public static final String COOLDOWN_TIMER_IN_MILLIS = "cooldownTimerInMillis";
     public static final String CUSTOM_TRIGGER = "customTrigger";
     public static final String IS_CUSTOM_TRIGGER_ENABLED = "isCustomTriggerEnabled";
+    public static final String IS_OLD_USER = "isOldUser";
 
 }

@@ -73,8 +73,10 @@
                             android:textStyle="normal" />
 
                         <com.google.android.material.card.MaterialCardView
-                            style="@style/Widget.Material3.CardView.Elevated"
+                            style="@style/Widget.Material3.CardView.Filled"
                             android:layout_width="wrap_content"
+                            app:cardCornerRadius="32dp"
+                            android:backgroundTint="@color/brand_secondary"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginVertical="12dp"
@@ -87,6 +89,7 @@
                                 android:layout_marginHorizontal="16dp"
                                 android:layout_marginVertical="8dp"
                                 android:gravity="center"
+                                android:textColor="@color/brand_matte_black"
                                 android:text="Version: 1.0.1" />
 
                         </com.google.android.material.card.MaterialCardView>
