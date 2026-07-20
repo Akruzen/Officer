@@ -44,7 +44,7 @@ public class SmsAlertActivity extends AppCompatActivity {
     MaterialButton sim1Button, sim2Button;
     MaterialButtonToggleGroup simToggleGroup;
     TextInputEditText phoneNumberEditText, smsMessageEditText;
-    Slider ignoreCountSlider;
+    Slider ignoreCountSlider, cooldownCountSlider;
     TextView previewTextView;
     ExtendedFloatingActionButton saveFab;
 
@@ -64,7 +64,7 @@ public class SmsAlertActivity extends AppCompatActivity {
                 if (!isGranted) {
                     locationSwitch.setChecked(false);
                 }
-                tinyDB.putBoolean(TinyDbKeys.IS_LOCATION_ATTACH_CHECKED, isGranted);
+                tinyDB.putBoolean(TinyDbKeys.IS_ALERT_LOCATION_APPEND_CHECKED, isGranted);
                 updateSaveButtonState();
                 updatePreview();
             }
@@ -83,13 +83,13 @@ public class SmsAlertActivity extends AppCompatActivity {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         backgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION);
                     } else {
-                        tinyDB.putBoolean(TinyDbKeys.IS_LOCATION_ATTACH_CHECKED, true);
+                        tinyDB.putBoolean(TinyDbKeys.IS_ALERT_LOCATION_APPEND_CHECKED, true);
                         updateSaveButtonState();
                         updatePreview();
                     }
                 } else {
                     locationSwitch.setChecked(false);
-                    tinyDB.putBoolean(TinyDbKeys.IS_LOCATION_ATTACH_CHECKED, false);
+                    tinyDB.putBoolean(TinyDbKeys.IS_ALERT_LOCATION_APPEND_CHECKED, false);
                     updateSaveButtonState();
                     updatePreview();
                 }
@@ -123,6 +123,7 @@ public class SmsAlertActivity extends AppCompatActivity {
         phoneNumberEditText = findViewById(R.id.phoneNumberEditText);
         smsMessageEditText = findViewById(R.id.smsMessageEditText);
         ignoreCountSlider = findViewById(R.id.ignoreCountSlider);
+        cooldownCountSlider = findViewById(R.id.cooldownCountSlider);
         previewTextView = findViewById(R.id.previewTextView);
         saveFab = findViewById(R.id.saveFab2);
 
@@ -137,7 +138,9 @@ public class SmsAlertActivity extends AppCompatActivity {
         phoneNumberEditText.setText(tinyDB.getString(TinyDbKeys.SMS_PHONE_NUMBER));
         smsMessageEditText.setText(tinyDB.getString(TinyDbKeys.SMS_TEXT_MESSAGE));
         ignoreCountSlider.setValue(tinyDB.getInt(TinyDbKeys.SMS_ALERT_IGNORE_COUNT));
-        locationSwitch.setChecked(tinyDB.getBoolean(TinyDbKeys.IS_LOCATION_ATTACH_CHECKED));
+        int cooldownCount = tinyDB.getInt(TinyDbKeys.SMS_ALERT_COOLDOWN_COUNT);
+        cooldownCountSlider.setValue(cooldownCount == 0 ? -1 : cooldownCount);
+        locationSwitch.setChecked(tinyDB.getBoolean(TinyDbKeys.IS_ALERT_LOCATION_APPEND_CHECKED));
         int selectedSim = tinyDB.getInt(TinyDbKeys.SELECTED_SIM);
         if (selectedSim == 1) {
             simToggleGroup.check(R.id.sim2Button);
@@ -170,23 +173,25 @@ public class SmsAlertActivity extends AppCompatActivity {
                             Manifest.permission.ACCESS_COARSE_LOCATION
                     });
                 } else {
-                    tinyDB.putBoolean(TinyDbKeys.IS_LOCATION_ATTACH_CHECKED, true);
+                    tinyDB.putBoolean(TinyDbKeys.IS_ALERT_LOCATION_APPEND_CHECKED, true);
                 }
             } else {
-                tinyDB.putBoolean(TinyDbKeys.IS_LOCATION_ATTACH_CHECKED, false);
+                tinyDB.putBoolean(TinyDbKeys.IS_ALERT_LOCATION_APPEND_CHECKED, false);
             }
             updatePreview();
             updateSaveButtonState();
         });
 
         ignoreCountSlider.addOnChangeListener((slider, value, fromUser) -> updateSaveButtonState());
+        cooldownCountSlider.addOnChangeListener((slider, value, fromUser) -> updateSaveButtonState());
         simToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> updateSaveButtonState());
 
         saveFab.setOnClickListener(v -> {
             tinyDB.putString(TinyDbKeys.SMS_PHONE_NUMBER, Objects.requireNonNull(phoneNumberEditText.getText()).toString());
             tinyDB.putString(TinyDbKeys.SMS_TEXT_MESSAGE, Objects.requireNonNull(smsMessageEditText.getText()).toString());
             tinyDB.putInt(TinyDbKeys.SMS_ALERT_IGNORE_COUNT, (int) ignoreCountSlider.getValue());
-            tinyDB.putBoolean(TinyDbKeys.IS_LOCATION_ATTACH_CHECKED, locationSwitch.isChecked());
+            tinyDB.putInt(TinyDbKeys.SMS_ALERT_COOLDOWN_COUNT, (int) cooldownCountSlider.getValue());
+            tinyDB.putBoolean(TinyDbKeys.IS_ALERT_LOCATION_APPEND_CHECKED, locationSwitch.isChecked());
             tinyDB.putInt(TinyDbKeys.SELECTED_SIM, simToggleGroup.getCheckedButtonId() == R.id.sim2Button ? 1 : 0);
             Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show();
             finish();
@@ -219,7 +224,8 @@ public class SmsAlertActivity extends AppCompatActivity {
         boolean hasChanged = !phone.equals(tinyDB.getString(TinyDbKeys.SMS_PHONE_NUMBER)) ||
                 !message.equals(tinyDB.getString(TinyDbKeys.SMS_TEXT_MESSAGE)) ||
                 (int) ignoreCountSlider.getValue() != tinyDB.getInt(TinyDbKeys.SMS_ALERT_IGNORE_COUNT) ||
-                locationSwitch.isChecked() != tinyDB.getBoolean(TinyDbKeys.IS_LOCATION_ATTACH_CHECKED) ||
+                (int) cooldownCountSlider.getValue() != tinyDB.getInt(TinyDbKeys.SMS_ALERT_COOLDOWN_COUNT) ||
+                locationSwitch.isChecked() != tinyDB.getBoolean(TinyDbKeys.IS_ALERT_LOCATION_APPEND_CHECKED) ||
                 (simToggleGroup.getCheckedButtonId() == R.id.sim2Button ? 1 : 0) != tinyDB.getInt(TinyDbKeys.SELECTED_SIM);
 
         saveFab.setEnabled(isValid && hasChanged);
