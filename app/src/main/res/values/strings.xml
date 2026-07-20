@@ -75,5 +75,5 @@
     <string name="sim_permission_required">Phone state permission is required to detect SIM cards.</string>
     <string name="location_permission_required">Background location permission is required.</string>
     <string name="cooldown_count">Cooldown Count</string>
-    <string name="cooldown_count_desc">Decide how many power off attempts would you like the app to wait after sending an SMS and before sending another one. Generally, once an SMS is sent, you already have been alerted, so there is technically no need for another one. Set the slider to \'-1\' if you don\'t want the alerts to be repeated.</string>
+    <string name="cooldown_count_desc">Decide how many power off attempts would you like the app to wait after sending an SMS and before sending another one. Generally, once an SMS is sent, you already have been alerted, so there is technically no need for another one. Set the slider to \'-1\' if you don\'t want the alerts to be repeated in that session.</string>
 </resources>
