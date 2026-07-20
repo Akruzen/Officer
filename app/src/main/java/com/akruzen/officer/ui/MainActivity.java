@@ -10,33 +10,31 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import android.Manifest;
 import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import com.akruzen.officer.AboutActivity;
 import com.akruzen.officer.CustomTriggerActivity;
 import com.akruzen.officer.R;
+import com.akruzen.officer.SmsAlertActivity;
 import com.akruzen.officer.WelcomeActivity;
 import com.akruzen.officer.constants.TinyDbKeys;
 import com.akruzen.officer.functions.Methods;
+import com.akruzen.officer.functions.PermissionHelper;
 import com.akruzen.officer.lib.TinyDB;
 import com.akruzen.officer.services.DialogAccessibilityService;
 import com.akruzen.officer.views.dialog.DialogLabels;
-import com.akruzen.officer.views.dialog.IMaterialDialogActionsCallback;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.materialswitch.MaterialSwitch;
 
 public class MainActivity extends AppCompatActivity {
 
-    MaterialSwitch onOffSwitch, strictSecuritySwitch, customTriggerSwitch;
+    MaterialSwitch onOffSwitch, strictSecuritySwitch, customTriggerSwitch, smsAlertSwitch;
     MaterialCardView permissionsCardView;
     TinyDB tinyDB;
     MaterialButton customTriggerButton;
@@ -53,6 +51,25 @@ public class MainActivity extends AppCompatActivity {
     public void onDeviceAdminButtonPress(View view) {
         startActivity(new Intent().setComponent(
                 new ComponentName("com.android.settings", "com.android.settings.DeviceAdminSettings")));
+    }
+
+    public void onConfigureSmsAlertPressed(View view) {
+        // Ask for Sms Permission
+        if (PermissionHelper.isSmsPermissionGranted(this)) {
+            startActivity(new Intent(this, SmsAlertActivity.class));
+        } else {
+            requestPermissions(new String[]{Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, 101);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 101) {
+            if (PermissionHelper.isSmsPermissionGranted(this)) {
+                startActivity(new Intent(this, SmsAlertActivity.class));
+            }
+        }
     }
 
     public void onUnableToGrantAccessibilityPress(View view) {
@@ -96,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         strictSecuritySwitch = findViewById(R.id.strictSecuritySwitch);
         customTriggerButton = findViewById(R.id.setupCustomTriggerButton);
         customTriggerSwitch = findViewById(R.id.customTriggerSwitch);
+        smsAlertSwitch = findViewById(R.id.smsAlertSwitch);
         // Method Calls
         setVisibilityAndEnablement();
         setSwitchesActions();
@@ -109,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     private void setVisibilityAndEnablement() {
         boolean isMasterEnabled = tinyDB.getBoolean(IS_MASTER_ENABLED);
 
-        if (Methods.isAllPermissionsGranted(this)) {
+        if (PermissionHelper.isAllMandatoryPermissionsGranted(this)) {
             onOffSwitch.setEnabled(true);
             permissionsCardView.setVisibility(View.GONE);
             onOffSwitch.setChecked(isMasterEnabled);
@@ -127,11 +145,19 @@ public class MainActivity extends AppCompatActivity {
             strictSecuritySwitch.setChecked(true);
         }
 
-        if (Methods.isAdminAccess(this)) {
+        if (PermissionHelper.isAdminAccess(this)) {
             findViewById(R.id.deviceAdminButton).setVisibility(View.GONE);
         }
-        if (Methods.isAccessibilityServiceEnabled(this, DialogAccessibilityService.class)) {
+        if (PermissionHelper.isAccessibilityServiceEnabled(this, DialogAccessibilityService.class)) {
             findViewById(R.id.accessibilityButton).setVisibility(View.GONE);
+        }
+        if (PermissionHelper.isSmsPermissionGranted(this)) {
+            smsAlertSwitch.setEnabled(true);
+            smsAlertSwitch.setChecked(tinyDB.getBoolean(TinyDbKeys.IS_SMS_ALERT_ENABLED));
+        } else {
+            smsAlertSwitch.setChecked(false);
+            smsAlertSwitch.setEnabled(false);
+            tinyDB.putBoolean(TinyDbKeys.IS_SMS_ALERT_ENABLED, false);
         }
 
         customTriggerSwitch.setChecked(tinyDB.getBoolean(IS_CUSTOM_TRIGGER_ENABLED));
@@ -151,11 +177,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        customTriggerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(@NonNull CompoundButton compoundButton, boolean isChecked) {
-                tinyDB.putBoolean(IS_CUSTOM_TRIGGER_ENABLED, isChecked);
-            }
-        });
+        customTriggerSwitch.setOnCheckedChangeListener((compoundButton, isChecked) ->
+                tinyDB.putBoolean(IS_CUSTOM_TRIGGER_ENABLED, isChecked));
+        smsAlertSwitch.setOnCheckedChangeListener((compoundButton, isChecked) ->
+                tinyDB.putBoolean(TinyDbKeys.IS_SMS_ALERT_ENABLED, isChecked));
     }
 }

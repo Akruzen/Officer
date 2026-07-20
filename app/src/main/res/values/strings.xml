@@ -4,7 +4,7 @@
     <string name="accessibility_label">Officer Accessibility</string>
     <string name="accessibility_description">To detect if a power menu is opened, Officer needs accessibility settings. You can be rest assured that this setting has no other malicious intent.</string>
     <string name="admin_label">Officer Admin Access</string>
-    <string name="admin_description">Now you may think why does this app require Device Admin access, but hey, if someone tries to shutdown your phone when it is locked you would want to prevent it, right? Officer uses this privilege to lock your screen such situation comes up.</string>
+    <string name="admin_description">Officer uses this privilege to put your screen to sleep in case someone tries to power off your phone from the lock screen.</string>
     <string name="accessibility_dialog_title">Grant Accessibility</string>
     <string name="accessibility_dialog_message">On Android 13 and above, accessibility permission is blocked by default for applications that are not downloaded from the Google Play Store. However, you can still enable it by following these steps:\n\n
     1. Try to enable the accessibility by clicking on \"Grant Accessibility Permission\" button above.\n
@@ -23,8 +23,10 @@
         If someone tries to open the power menu again, the timer restarts. This makes it much harder for a thief to shut down the phone before it locks.</string>
     <string name="set_timer_duration">Set timer duration in seconds</string>
     <string name="use_custom_trigger">Use custom trigger</string>
-    <string name="set_custom_info">Different phone manufacturers have different event triggers which get broadcasted when the power menu is opened. Hence, there is no one-size-fits all solution. Trigger the power menu right now, and the app will detect a few related events which were broadcasted. Try out all the options in the list of events below and select an option which works for your device.</string>
-    <string name="welcome_set_custom_info">Different phone manufacturers have different event triggers which get broadcasted when the power menu is opened. Hence, there is no one-size-fits all solution. Once you give all the required permissions, use the custom trigger menu to complete the setup.</string>
+    <string name="set_custom_info">Different phone manufacturers have different event triggers which get broadcast when the power menu is opened. Hence, there is no one-size-fits all solution. Trigger the power menu right now, and the app will detect a few related events which were broadcasted. Try out all the options in the list of events below and select an option which works for your device.</string>
+    <string name="send_sms_alert">Send SMS alert</string>
+    <string name="send_alert_sms_desc">Automatically send an SMS if tried to power off from lock screen. Optionally, attach the device location with it.</string>
+    <string name="welcome_set_custom_info">Different phone manufacturers have different event triggers which get broadcast when the power menu is opened. Hence, there is no one-size-fits all solution. Once you give all the required permissions, use the custom trigger menu to complete the setup.</string>
     <string name="set_custom_trigger_desc">Set a custom trigger point for putting the screen to sleep. If the app is not working on your device, try setting this up.</string>
     <string name="listening_for_events">Please open your device\'s power menu.\nListening for events…</string>
     <string name="setup">Setup</string>
@@ -59,4 +61,17 @@
     <string name="detecting_events">Detecting events...</string>
     <string name="set_up_trigger">Set up trigger</string>
     <string name="maybe_later">Maybe later</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="phone_number_desc">Enter the phone number, your desired text message and the SIM card network to be used. This number will be receiving your text message. Make sure you include the country code in the number.</string>
+    <string name="contact_details">Contact Details</string>
+    <string name="location">Location</string>
+    <string name="location_desc">Append the Google Maps location link to the SMS content.</string>
+    <string name="ignore_count">Ignore Count</string>
+    <string name="ignore_count_desc">Decide how many times you would like the app to ignore powering off attempts before sending the SMS. This is useful for preventing accidental alerts. The ignore count resets when you unlock your device.</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ante massa, euismod rhoncus rutrum ac, hendrerit quis libero. Maecenas venenatis tellus quis neque lacinia bibendum. Nullam imperdiet a libero a accumsan. Praesent bibendum sed ligula sed pharetra. Donec fermentum orci at nisl ullamcorper blandit.</string>
+    <string name="preview_placeholder">Your message preview will appear here.</string>
+    <string name="maps_link_template">\nMaps Link: https://maps.google.com/?q=18.519596177869815,73.85542072116314 (example)</string>
+    <string name="saved">Saved</string>
+    <string name="sim_permission_required">Phone state permission is required to detect SIM cards.</string>
+    <string name="location_permission_required">Background location permission is required.</string>
 </resources>
