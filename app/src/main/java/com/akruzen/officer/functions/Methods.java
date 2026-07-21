@@ -1,57 +1,23 @@
 package com.akruzen.officer.functions;
 
-import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.AccessibilityServiceInfo;
-import android.app.admin.DevicePolicyManager;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ServiceInfo;
-import android.util.Log;
-import android.view.accessibility.AccessibilityManager;
+import android.graphics.Rect;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.akruzen.officer.services.DialogAccessibilityService;
 import com.akruzen.officer.services.ScreenStateService;
 import com.akruzen.officer.views.dialog.DialogLabels;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 public class Methods {
-
-    public static boolean isAccessibilityServiceEnabled(Context context, Class<? extends AccessibilityService> service) {
-        AccessibilityManager am = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
-        List<AccessibilityServiceInfo> enabledServices = am.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK);
-        for (AccessibilityServiceInfo enabledService : enabledServices) {
-            ServiceInfo enabledServiceInfo = enabledService.getResolveInfo().serviceInfo;
-            if (enabledServiceInfo.packageName.equals(context.getPackageName()) && enabledServiceInfo.name.equals(service.getName()))
-                return true;
-        }
-        return false;
-    }
-
-    public static boolean isAdminAccess(Context context) {
-        AtomicBoolean isAdminAccessFlag = new AtomicBoolean(false);
-        DevicePolicyManager policyManager = (DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-        if (policyManager.getActiveAdmins() != null) {
-            policyManager.getActiveAdmins().forEach(adminInfo -> {
-                if (adminInfo.getPackageName().equals(context.getPackageName())) {
-                    isAdminAccessFlag.set(true);
-                }
-            });
-        }
-        return isAdminAccessFlag.get();
-    }
-
-    public static boolean isAllPermissionsGranted(Context context) {
-        boolean isAccessibilityServiceEnabled = isAccessibilityServiceEnabled(context, DialogAccessibilityService.class);
-        boolean isAppAdmin = isAdminAccess(context);
-        return isAccessibilityServiceEnabled && isAppAdmin;
-    }
 
     public static AlertDialog getAlertDialog(Context context, DialogLabels dialogLabels) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
@@ -96,6 +62,23 @@ public class Methods {
             context.startForegroundService(new Intent(context, ScreenStateService.class));
         } else {
             context.getPackageManager().setComponentEnabledSetting(component, PackageManager.COMPONENT_ENABLED_STATE_DISABLED , PackageManager.DONT_KILL_APP);
+        }
+    }
+
+    public static void dismissKeyboard(Activity activity, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = activity.getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    }
+                }
+            }
         }
     }
 

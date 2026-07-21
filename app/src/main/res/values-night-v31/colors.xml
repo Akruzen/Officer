@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dynamic_background">@color/material_dynamic_primary10</color>
+</resources>

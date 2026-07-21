@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:padding="16dp"
             android:text="@string/app_name"
-            style="@style/Theme.OFFicer.RoundedFont"
+            style="@style/Theme.OFFicer.FatFont"
             android:textSize="28sp" />
 
         <com.google.android.material.button.MaterialButton
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleLinearLayout">
@@ -56,6 +56,7 @@
                 android:id="@+id/permissionsCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:visibility="gone"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp">
 
@@ -79,14 +80,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="@string/missing_permissions"/>
+                            android:text="@string/missing_permissions"
+                            android:textSize="18sp" />
 
                     </LinearLayout>
 
                     <TextView
+                        style="@style/Theme.OFFicer.RoundedFont"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="8dp"
@@ -114,10 +116,10 @@
                         style="@style/Widget.Material3Expressive.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="onUnableToGrantAccessibilityPress"
                         android:layout_gravity="end"
                         android:layout_marginTop="8dp"
-                        android:text="Unable to grant accessibility permission?"/>
+                        android:onClick="onUnableToGrantAccessibilityPress"
+                        android:text="Unable to grant accessibility permission?" />
 
                 </LinearLayout>
 
@@ -130,6 +132,7 @@
                 android:layout_gravity="top"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
+                android:backgroundTint="@color/brand_primary"
                 app:cardCornerRadius="32dp">
 
                 <LinearLayout
@@ -144,6 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Enable Officer"
+                        android:textColor="@color/brand_off_white"
                         android:textSize="24sp" />
 
                     <com.google.android.material.materialswitch.MaterialSwitch
@@ -161,14 +165,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:gravity="bottom"
-                android:orientation="vertical"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="16dp">
+                android:gravity="bottom"
+                android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -180,6 +185,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Settings"
+                            android:textStyle="bold"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -192,18 +198,21 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.4"
+                                android:layout_gravity="center"
                                 android:orientation="vertical">
 
                                 <TextView
+                                    style="@style/Theme.OFFicer.RoundedFont"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/use_custom_trigger"/>
+                                    android:text="@string/use_custom_trigger" />
 
                                 <TextView
+                                    style="@style/Theme.OFFicer.RoundedFont"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:alpha="0.5"
-                                    android:text="@string/set_custom_trigger_desc"/>
+                                    android:text="@string/set_custom_trigger_desc" />
 
                             </LinearLayout>
 
@@ -215,20 +224,20 @@
 
                                 <com.google.android.material.materialswitch.MaterialSwitch
                                     android:id="@+id/customTriggerSwitch"
-                                    android:enabled="false"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"/>
+                                    android:layout_gravity="center"
+                                    android:enabled="false" />
 
                                 <com.google.android.material.button.MaterialButton
                                     android:id="@+id/setupCustomTriggerButton"
                                     style="@style/Widget.Material3Expressive.Button.OutlinedButton"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="8dp"
                                     android:layout_gravity="center"
+                                    android:layout_marginHorizontal="8dp"
                                     android:onClick="onSetCustomTriggerPress"
-                                    android:text="@string/setup"/>
+                                    android:text="@string/setup" />
 
                             </LinearLayout>
 
@@ -238,7 +247,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="8dp"
-                            android:alpha="0.5"/>
+                            android:alpha="0.5" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -250,18 +259,21 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.4"
+                                android:layout_gravity="center"
                                 android:orientation="vertical">
 
                                 <TextView
+                                    style="@style/Theme.OFFicer.RoundedFont"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/use_strict_security"/>
+                                    android:text="@string/use_strict_security" />
 
                                 <TextView
+                                    style="@style/Theme.OFFicer.RoundedFont"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:alpha="0.5"
-                                    android:text="@string/strict_security_desc"/>
+                                    android:text="@string/strict_security_desc" />
 
                             </LinearLayout>
 
@@ -275,7 +287,7 @@
                                     android:id="@+id/strictSecuritySwitch"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"/>
+                                    android:layout_gravity="center" />
 
                                 <com.google.android.material.button.MaterialButton
                                     style="@style/Widget.Material3Expressive.Button.OutlinedButton"
@@ -284,7 +296,125 @@
                                     android:layout_gravity="center"
                                     android:layout_marginHorizontal="8dp"
                                     android:onClick="onConfigureStrictSecurityPress"
-                                    android:text="@string/configure"/>
+                                    android:text="@string/configure" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="8dp"
+                            android:alpha="0.5" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="0.4"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/Theme.OFFicer.RoundedFont"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/send_sms_alert" />
+
+                                <TextView
+                                    style="@style/Theme.OFFicer.RoundedFont"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:alpha="0.5"
+                                    android:text="@string/send_alert_sms_desc" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.8"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.materialswitch.MaterialSwitch
+                                    android:id="@+id/smsAlertSwitch"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    style="@style/Widget.Material3Expressive.Button.OutlinedButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginHorizontal="8dp"
+                                    android:onClick="onConfigureSmsAlertPressed"
+                                    android:text="@string/configure" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="8dp"
+                            android:alpha="0.5" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="0.4"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/Theme.OFFicer.RoundedFont"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/broadcast_event" />
+
+                                <TextView
+                                    style="@style/Theme.OFFicer.RoundedFont"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:alpha="0.5"
+                                    android:text="@string/broadcast_event_desc" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.8"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.materialswitch.MaterialSwitch
+                                    android:id="@+id/broadcastEventSwitch"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    style="@style/Widget.Material3Expressive.Button.OutlinedButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginHorizontal="8dp"
+                                    android:onClick="onBroadcastEventPressed"
+                                    android:text="@string/configure" />
 
                             </LinearLayout>
 
@@ -298,18 +428,62 @@
         </LinearLayout>
     </ScrollView>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="Made with ❤️ in Pune, India"
-        android:textSize="12sp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                app:srcCompat="@drawable/seven_sided_cookie" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                app:srcCompat="@drawable/flower" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                app:srcCompat="@drawable/clove" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                app:srcCompat="@drawable/arrow" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Made with ❤️ in Pune, India"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
