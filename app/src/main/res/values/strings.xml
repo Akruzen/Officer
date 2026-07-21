@@ -81,4 +81,6 @@
     <string name="broadcast_event_desc2">Broadcast an event when tried to power off from the lock screen. You can use automation routines with third party apps like Tasker and Macrodroid to trigger further actions on your phone. The intent will be named as \'com.akruzen.officer.ACTION_LOCK_TRIGGERED\'</string>
     <string name="repetition">Repetition</string>
     <string name="repetition_desc">Broadcast the event each and every time the power menu is triggered from the lock screen. Turning this OFF will broadcast the event only once per session.</string>
+    <string name="inspiration">Inspiration</string>
+    <string name="inspiration_desc">I was returning home one evening by a Rickshaw Cab. When I got off the cab to pay the driver, I had left my phone on the seat. After paying the money, the driver immediately sped off thus stealing my phone. I tried to track my phone using Google\'s \'Find my device\', but unfortunately, he had switched off my phone. I hope my app will help people buy time to track their devices if such cases happen to them.</string>
 </resources>
