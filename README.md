@@ -1,17 +1,39 @@
-![Static Badge](https://img.shields.io/badge/Java-orange) ![Static Badge](https://img.shields.io/badge/Android-black?logo=android&color=grey) ![Static Badge](https://img.shields.io/badge/Gradle-blue?logo=gradle&color=blue) ![Static Badge](https://img.shields.io/badge/Works_Offline-lightblue)
+<div align="center">
 
-# Introduction
-Picture this: You just got your shiny new Google Pixel — snapping crisp cityscape shots, soaking in that buttery-smooth Stock Android vibe. Life's good. You grab a cab to a buzzing downtown spot, chase golden hour with your camera, then treat yourself to a cozy Café Mocha. 
-Bliss. But as you hop on the bus home… your pocket feels empty. Panic hits. Your Pixel is gone.
-You sprint back to the café — too late. Someone snagged your phone and bam, it's powered off. Tracking? Useless. You're stuck hoping Google's "Find My Device" pulls off a miracle. Major buzzkill, right?
-That's exactly why this app exists. It keeps your Pixel, or any other phone from being powered off when it’s locked. Simple. Smart. Secure.
+<img src="https://github.com/Akruzen/Officer/blob/master/app/src/main/ic_launcher-playstore.png" width="128" height="128" />
 
-# Motivation
-I have built this app from my personal experience, where my device got stolen and I could do nothing about it except lodge a complaint at the local police station. I hope no one else encounters what I did with the help of this app. Any feedback and improvements are welcome! 🙂
+# Officer
+**Keep your Pixel, your Pixel.**
 
-# How does this work?
-For powering off your device, what do you do? Exactly. You open the power menu. This application detects that a power menu is opened and instantly locks the phone. Optionally, you can set a cooldown timer too! This means if someone tries to power off your device while it's locked, 
-the screen will turn off as soons as it is turned on for 5 seconds. This '5' seconds can be configured in the app.
+[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com)
+[![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com)
+[![Material 3](https://img.shields.io/badge/Material_3-7155D3?style=for-the-badge&logo=materialdesign&logoColor=white)](https://m3.material.io)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-# Contact
-You can reach out to me on Discord at Akruzen#2652
+---
+
+### 📱 App Screenshots
+
+<table border="0">
+  <tr>
+    <td width="33%"><img src="https://github.com/Akruzen/Officer/blob/master/doc/ss3.png" alt="Main Screen" style="border-radius: 24px;"></td>
+    <td width="33%"><img src="https://github.com/Akruzen/Officer/blob/master/doc/ss2.png" alt="Settings" style="border-radius: 24px;"></td>
+    <td width="33%"><img src="https://github.com/Akruzen/Officer/blob/master/doc/ss1.png" alt="Active Guard" style="border-radius: 24px;"></td>
+  </tr>
+</table>
+
+</div>
+
+## About
+**Officer** was born out of my personal experience. After losing my device to theft, I realized the biggest flaw, that is **thieves power off the phone immediately to kill tracking.** This app plugs that hole by preventing the power menu from being shown while the phone is locked.
+
+---
+
+## Working
+Using Android's Accessibility services, Officer monitors system UI events. Whenever it detects that a power menu is getting triggered while your screen is locked, it immediately puts the display to sleep. This way, the it becomes difficult to power off your phone.
+
+---
+
+## Contact and feedback
+
+You can drop me a message at my discord ID `Akruzen#2652`. If you find any issues with the app, feel free to [open a new issue](https://www.google.com/search?q=https://github.com/Akruzen/Officer/issues). Thanks!
