@@ -34,7 +34,7 @@ import com.google.android.material.materialswitch.MaterialSwitch;
 
 public class MainActivity extends AppCompatActivity {
 
-    MaterialSwitch onOffSwitch, strictSecuritySwitch, customTriggerSwitch, smsAlertSwitch;
+    MaterialSwitch onOffSwitch, strictSecuritySwitch, customTriggerSwitch, smsAlertSwitch, broadcastEventSwitch;
     MaterialCardView permissionsCardView;
     TinyDB tinyDB;
     MaterialButton customTriggerButton;
@@ -60,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             requestPermissions(new String[]{Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, 101);
         }
+    }
+
+    public void onBroadcastEventPressed(View view) {
+        startActivity(new Intent(this, BroadcastEventActivity.class));
     }
 
     @Override
@@ -114,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         customTriggerButton = findViewById(R.id.setupCustomTriggerButton);
         customTriggerSwitch = findViewById(R.id.customTriggerSwitch);
         smsAlertSwitch = findViewById(R.id.smsAlertSwitch);
+        broadcastEventSwitch = findViewById(R.id.broadcastEventSwitch);
         // Method Calls
         setVisibilityAndEnablement();
         setSwitchesActions();
@@ -161,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         customTriggerSwitch.setChecked(tinyDB.getBoolean(IS_CUSTOM_TRIGGER_ENABLED));
+        broadcastEventSwitch.setChecked(tinyDB.getBoolean(TinyDbKeys.IS_BROADCAST_EVENT_ENABLED));
     }
 
     private void setSwitchesActions() {
@@ -181,5 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 tinyDB.putBoolean(IS_CUSTOM_TRIGGER_ENABLED, isChecked));
         smsAlertSwitch.setOnCheckedChangeListener((compoundButton, isChecked) ->
                 tinyDB.putBoolean(TinyDbKeys.IS_SMS_ALERT_ENABLED, isChecked));
+        broadcastEventSwitch.setOnCheckedChangeListener((compoundButton, isChecked) ->
+                tinyDB.putBoolean(TinyDbKeys.IS_BROADCAST_EVENT_ENABLED, isChecked));
     }
 }

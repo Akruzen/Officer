@@ -18,5 +18,7 @@ public class TinyDbKeys {
     public static final String SMS_TEXT_MESSAGE = "smsTextMessage";
     public static final String SMS_ALERT_IGNORE_CURR_COUNT = "smsAlertIgnoreCurrCount";
     public static final String SMS_ALERT_COOLDOWN_CURR_COUNT = "smsAlertCooldownCurrCount";
+    public static final String IS_BROADCAST_EVENT_ENABLED = "isBroadcastEventEnabled";
+    public static final String IS_REPEAT_BROADCAST_EVENTS_CHECKED = "isRepeatBroadcastEventsChecked";
 
 }

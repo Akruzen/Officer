@@ -67,7 +67,7 @@
     <string name="location">Location</string>
     <string name="location_desc">Append the Google Maps location link to the SMS content.</string>
     <string name="ignore_count">Ignore Count</string>
-    <string name="ignore_count_desc">Decide how many times you would like the app to ignore powering off attempts before sending the SMS. This is useful for preventing accidental alerts. The ignore count resets when you unlock your device.</string>
+    <string name="ignore_count_desc">Decide how many times you would like the app to ignore powering off attempts before sending the SMS. This is useful for preventing accidental alerts. The counting resets when you unlock your device.</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ante massa, euismod rhoncus rutrum ac, hendrerit quis libero. Maecenas venenatis tellus quis neque lacinia bibendum. Nullam imperdiet a libero a accumsan. Praesent bibendum sed ligula sed pharetra. Donec fermentum orci at nisl ullamcorper blandit.</string>
     <string name="preview_placeholder">Your message preview will appear here.</string>
     <string name="maps_link_template">\nMaps Link: https://maps.google.com/?q=18.519596177869815,73.85542072116314 (example)</string>
@@ -76,4 +76,9 @@
     <string name="location_permission_required">Background location permission is required.</string>
     <string name="cooldown_count">Cooldown Count</string>
     <string name="cooldown_count_desc">Decide how many power off attempts would you like the app to wait after sending an SMS and before sending another one. Generally, once an SMS is sent, you already have been alerted, so there is technically no need for another one. Set the slider to \'-1\' if you don\'t want the alerts to be repeated in that session.</string>
+    <string name="broadcast_event">Broadcast Event</string>
+    <string name="broadcast_event_desc">Broadcast an event when tried to power off from the lock screen. Useful for integrating with third party automation apps.</string>
+    <string name="broadcast_event_desc2">Broadcast an event when tried to power off from the lock screen. You can use automation routines with third party apps like Tasker and Macrodroid to trigger further actions on your phone. The intent will be named as \'com.akruzen.officer.ACTION_LOCK_TRIGGERED\'</string>
+    <string name="repetition">Repetition</string>
+    <string name="repetition_desc">Broadcast the event each and every time the power menu is triggered from the lock screen. Turning this OFF will broadcast the event only once per session.</string>
 </resources>

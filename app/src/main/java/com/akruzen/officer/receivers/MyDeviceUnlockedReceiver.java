@@ -18,7 +18,8 @@ public class MyDeviceUnlockedReceiver extends BroadcastReceiver {
             tinyDB = new TinyDB(context);
             tinyDB.putInt(TinyDbKeys.SMS_ALERT_IGNORE_CURR_COUNT, 0);
             tinyDB.putInt(TinyDbKeys.SMS_ALERT_COOLDOWN_CURR_COUNT, 0);
-            Log.d("Sadashiv", "Screen unlocked! Ignore count and cooldown reset.");
+            tinyDB.putBoolean(TinyDbKeys.IS_DEVICE_FORCED_LOCKED, false);
+            Log.d("Sadashiv", "Screen unlocked! Ignore count, cooldown, force locked boolean reset.");
         }
     }
 }
