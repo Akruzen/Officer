@@ -26,22 +26,26 @@ public class DialogAccessibilityService extends AccessibilityService {
     protected void onServiceConnected() {
         super.onServiceConnected();
         Log.d("AccessibilityService", "Service is connected and running!");
-        AccessibilityServiceInfo info = new AccessibilityServiceInfo();
-        // Set the type of events that this service wants to listen to. Others
-        // aren't passed to this service.
-        info.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED |
-                AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED;
+        // Retrieve the existing configuration to preserve XML settings
+        AccessibilityServiceInfo info = getServiceInfo();
+        if (info == null) {
+            info = new AccessibilityServiceInfo();
+        }
 
-        // Set the type of feedback your service provides.
+        // Only listen for window state change events
+        info.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED;
+
+        // Set the type of feedback your service provides
         info.feedbackType = AccessibilityServiceInfo.FEEDBACK_ALL_MASK;
 
-        // Default services are invoked only if no package-specific services are
-        // present for the type of AccessibilityEvent generated. This service is
-        // app-specific, so the flag isn't necessary. For a general-purpose service,
-        // consider setting the DEFAULT flag.
+        // Restrict to System UI package to eliminate system-wide overhead
+        info.packageNames = new String[]{"com.android.systemui"};
 
-        info.flags = AccessibilityServiceInfo.DEFAULT;
-        info.notificationTimeout = 100;
+        info.flags |= AccessibilityServiceInfo.DEFAULT;
+
+        // Deliver events instantly (0ms delay)
+        info.notificationTimeout = 0;
+
         this.setServiceInfo(info);
 
         unlockedReceiver = new MyDeviceUnlockedReceiver();
@@ -55,25 +59,31 @@ public class DialogAccessibilityService extends AccessibilityService {
         try {
             if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
                 TinyDB tinyDB = new TinyDB(this);
-                String packageName = event.getPackageName().toString();
-                // Log.d("Sadashiv", "Window state change detected with event: " + event);
+
+                // Safe null check for package name
+                CharSequence pkgNameChar = event.getPackageName();
+                String packageName = pkgNameChar != null ? pkgNameChar.toString() : "";
 
                 if (packageName.equals("com.android.systemui")) {
-                    // Log.d("Sadashiv", "System UI detected with event: " + event);
                     DevicePolicyManager devicePolicyManager = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
                     boolean isScreenLocked = ((KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE)).inKeyguardRestrictedInputMode();
 
-                    // Useful only for detecting custom trigger in custom trigger activity.
-                    // Not used while on lock screen
                     if (!isScreenLocked) {
                         Intent intent = new Intent("com.akruzen.officer.SYSTEM_UI_EVENT");
                         intent.putExtra("eventClassName", event.getClassName());
                         sendBroadcast(intent);
                     } else if (shouldScreenGoToSleep(event, tinyDB)) {
-                        // Lock the device screen. Perform all the operations afterwards
+
+                        // Dismiss power menu immediately (Simulate Back Button)
+                        performGlobalAction(GLOBAL_ACTION_BACK);
+                        Log.i("AccessibilityService", "Power menu dismissed via BACK action");
+
+                        // Lock the device screen immediately
                         devicePolicyManager.lockNow();
                         Log.i("AccessibilityService", "Device locked");
-                        handleBroadcastEvents(this, tinyDB); // Should always be called before strict security call
+
+                        // Perform other operations
+                        handleBroadcastEvents(this, tinyDB);
                         handleStrictSecurity(tinyDB);
                         handleSms(this, tinyDB);
                     }
