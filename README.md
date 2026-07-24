@@ -14,7 +14,6 @@
   <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/Java/java2.svg">
   <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/AndroidStudio/androidstudio3.svg">
   <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/LicenceGPLv2/licencegplv21.svg">
-  <img src="https://m3-markdown-badges.vercel.app/stars/3/3/akruzen/officer">
 </p>
 
 <table align="center">
